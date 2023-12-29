@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,6 @@ Route::get('/', function () {
 });
 
 Route::get('/download', [DownloadController::class, 'getDownload']);
+Route::get('/user/panel', [DashboardController::class, 'userDashboard']);
+
+
