@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Tarique Mosharraf +88 01837664478">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('template/admin_template/assets/images/favicon.png')}}">
-    <title>Digital Tools BD Store</title>
+    <title>{{ config('app.name', 'Digital Store') }}</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('template/admin_template/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- morris CSS -->
@@ -46,7 +46,7 @@
             <!-- Logo -->
             <!-- ============================================================== -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="{{ url('/') }}">
                     <!-- Logo icon --><b>
                         <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo icon -->
@@ -74,13 +74,19 @@
                                     <div class="dw-user-box">
                                         <div class="u-img"><img src="{{asset('template/admin_template/assets/images/users/1.jpg')}}" alt="user"></div>
                                         <div class="u-text">
-                                            <h4>Steave Jobs</h4>
-                                            <p class="text-muted">varun@gmail.com</p><a href="/" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                            <h4>{{ Auth::user()->name }}</h4>
+                                            <p class="text-muted">{{ Auth::user()->email }}</p><a href="/" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                     </div>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                                <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                <li>   <a href="{{ route('logout') }}"
+                                          onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"> <i class="fa fa-power-off"></i>   {{ __('Logout') }} </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </li>

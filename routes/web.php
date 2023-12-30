@@ -20,7 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/download', [DownloadController::class, 'getDownload']);
-Route::get('/user/panel', [DashboardController::class, 'userDashboard']);
+Route::get('/user/panel', [DashboardController::class, 'userDashboard'])->name('user.dashboard');
+Route::get('/admin/dashboard', [DashboardController::class, 'userDashboard'])->name('admin.dashboard');
 
 
 
