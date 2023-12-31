@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('phone_contact')->nullable();
             $table->string('email_contact')->nullable();
             $table->string('site_name')->nullable();
-            $table->string('site_title')->nullable();
             $table->timestamps();
         });
     }
