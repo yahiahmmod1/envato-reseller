@@ -80,9 +80,11 @@
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                                <li>   <a href="{{ route('logout') }}"
+                                <li>
+                                    <a href="{{ route('logout') }}"
                                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"> <i class="fa fa-power-off"></i>   {{ __('Logout') }} </a>
+                                                     document.getElementById('logout-form').submit();"> <i class="fa fa-power-off"></i>   {{ __('Logout') }}
+                                    </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -102,8 +104,33 @@
             © 2024 All Right Reserved.
         </footer>
     </div>
-
 </div>
+
+
+<div class="modal fade" id="licenseKeyModal" tabindex="-1" role="dialog" aria-labelledby="licenseKeyModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel1">Service Activation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="license-key-form" action="{{route('activation.process')}}" method="POST" accept-charset="UTF-8">
+                    @csrf
+                    <div class="form-group">
+                        <label for="license-key" class="control-label">Enter your license key, you've received via email.</label>
+                        <input name="license_key" type="text" class="form-control" id="licesnse_key">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('license-key-form').submit()">Activate</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal -->
 <script src="{{asset('template/admin_template/assets/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{asset('template/admin_template/assets/plugins/bootstrap/js/popper.min.js')}}"></script>

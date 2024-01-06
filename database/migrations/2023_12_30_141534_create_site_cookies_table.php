@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->smallInteger('site_id');
             $table->text('cookie_content');
-            $table->text('csrf_token');
+            $table->text('csrf_token')->nullable();
             $table->enum('status',['active','inactive'])->nullable('active');
             $table->timestamps();
         });

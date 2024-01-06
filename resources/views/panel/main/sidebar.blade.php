@@ -26,7 +26,7 @@
                 <li class="nav-small-cap">ACTIVATION</li>
                 <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-key"></i><span class="hide-menu">License</span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="#"> License Key </a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#licenseKeyModal" data-whatever="LiceseKey"> License Key </a></li>
                         <li><a href="#"> History  </a></li>
                     </ul>
                 </li>
