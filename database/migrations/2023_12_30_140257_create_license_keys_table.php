@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('license_keys', function (Blueprint $table) {
             $table->id();
             $table->string('license_key');
-            $table->bigInteger('user_id');
+            $table->bigInteger('user_id')->nullable();
             $table->string('created_date');
             $table->string('expiry_date')->nullable();
             $table->integer('days_limit');

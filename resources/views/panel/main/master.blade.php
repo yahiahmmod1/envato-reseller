@@ -99,6 +99,26 @@
     @include('panel.main.sidebar')
     <div class="page-wrapper">
        @yield('breadchrumb')
+        @if($errors->any())
+        <div class="row">
+            <div class="col-12">
+                <div class="content">
+                    <div class="alert alert-danger"> {{$errors->first()}}   <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if (session('status'))
+            <div class="row">
+                <div class="col-12">
+                    <div class="content">
+                        <div class="alert alert-success">   {{ session('status') }}   <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
       @yield('content')
         <footer class="footer">
             © 2024 All Right Reserved.
