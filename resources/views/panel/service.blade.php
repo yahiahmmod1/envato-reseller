@@ -2,11 +2,12 @@
 @section('breadchrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-themecolor">Dashboard</h3>
+            <h3 class="text-themecolor">Service: {{$service}} </h3>
         </div>
         <div class="col-md-7 align-self-center">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">Dashboard</li>
+                <li class="breadcrumb-item ">Dashboard</li>
+                <li class="breadcrumb-item active">Service</li>
             </ol>
         </div>
     </div>
@@ -17,75 +18,90 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Download History</h4>
-                        <div class="alert alert-dark" style="background-color: #FFE0DB; color: #e63946">
-                            <strong>Important:</strong>
-                            <ul style="margin-bottom: -3px;">
-                                <li>Files that you have already downloaded, can be re-download within 24 hours by clicking the License Download button.</li>
-                                <li>If do not showing the Licensed Download button, possible reasons is it has been over 24 hours or the licensed download link is not ready yet.</li>
-                                <li>Depending on the file sizes, time may take longer to show the License Download option.</li>
-                            </ul>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <button class="btn btn-primary"><i class="mdi mdi-check"> </i> Service Status: Running </button>
+                            <a class="btn btn-info text-white"><i class="mdi mdi-video"> </i> Watch promo video </a>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>ID#</th>
-                                    <th>Service Name</th>
-                                    <th>Assets</th>
-                                    <th>Status</th>
-                                    <th>Time</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Deshmukh</td>
-                                    <td>Prohaska</td>
-                                    <td><span class="label label-success">Success</span></td>
-                                    <td>1 week 1 day before (2023-12-20 22:49:07) </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Deshmukh</td>
-                                    <td>Gaylord</td>
-                                    <td><span class="label label-success">Success</span></td>
-                                    <td>1 week 1 day before (2023-12-20 22:49:07) </td>
-                                </tr>
-                                </tbody>
-                            </table>
+
+                        <div class="row mx-2 p-2" style="border: 1px solid red">
+                            <div class="col-8">
+                                <div>
+                                    <h2 class="text-danger">You don't have any active services or you've cross your download limits.
+                                        To purchase this service, click on Buy Now button.</h2>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                               <button class="btn btn-primary  pull-right"><i class="mdi mdi-check"> </i> Buy Now </button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Order History</h4>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>ID#</th>
-                                    <th>Service Name</th>
-                                    <th>Daily Limit</th>
-                                    <th>Asset Name</th>
-                                    <th>Expiry Date</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>License Key</td>
-                                    <td>Envato</td>
-                                    <td><span class="label label-danger">Expired</span></td>
-                                    <td>2023-10-01</td>
-                                </tr>
-                                </tbody>
-                            </table>
+
+                        <div class="row my-2">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card card-info">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12"><h2 class=" text-white">24 <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                                <h6 class="text-white">Remaining Daily Download</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card card-primary">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12"><h2 class=" text-white"> 22-01-2024 <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                                <h6 class=" text-white">Service End Date</h6></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card card-warning">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12"><h2 class=" text-white">10 <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                                <h6 class=" text-white">Total download limit</h6></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card card-danger">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12"><h2 class=" text-white">2376 <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                                <h6 class=" text-white">Total downloads file</h6></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+
+                        <div class="row my-2">
+                            <div class="col-lg-12">
+                                <div class="alert alert-primary">Download links are valid for ...</div>
+                            </div>
+                        </div>
+
+                        <div class="row my-2">
+                            <div class="col-lg-12">
+                                <div class="alert alert-danger">Make sure ...</div>
+                            </div>
+                        </div>
+
+                        <div class="row my-2">
+                            <div class="col-lg-9 col-md-12">
+                                <input type="text" class="form-control" placeholder="Enter your envato element content url">
+                            </div>
+                            <div class="col-lg-3 col-md-12">
+                                <input type="submit" class="btn btn-success" value="Generate download link">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

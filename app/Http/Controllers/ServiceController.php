@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class ServiceController extends Controller
 {
     public function userService(Request $request, $service){
-        dd($service);
+       // $data['service'] = $service;
+        return view('panel.service',['service'=>$service]);
     }
 }
