@@ -172,7 +172,9 @@
 <!-- Chart JS -->
 <script src="{{asset('template/admin_template/js/dashboard1.js')}}"></script>
 <!-- ============================================================== -->
+<script src="{{asset('template/admin_template/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 
+@stack('custom-scripts')
 </body>
 
 </html>

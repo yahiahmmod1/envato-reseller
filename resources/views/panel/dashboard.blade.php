@@ -18,6 +18,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Download History</h4>
+                        <h6 class="card-subtitle">All Service Download History</h6>
                         <div class="alert alert-dark" style="background-color: #FFE0DB; color: #e63946">
                             <strong>Important:</strong>
                             <ul style="margin-bottom: -3px;">
@@ -26,8 +27,8 @@
                                 <li>Depending on the file sizes, time may take longer to show the License Download option.</li>
                             </ul>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table">
+                        <div class="table-responsive m-t-40">
+                            <table id="downloadTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>ID#</th>
@@ -45,13 +46,6 @@
                                     <td><span class="label label-success">Success</span></td>
                                     <td>1 week 1 day before (2023-12-20 22:49:07) </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Deshmukh</td>
-                                    <td>Gaylord</td>
-                                    <td><span class="label label-success">Success</span></td>
-                                    <td>1 week 1 day before (2023-12-20 22:49:07) </td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -59,13 +53,15 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Order History</h4>
-                        <div class="table-responsive">
-                            <table class="table">
+                        <h6 class="card-subtitle">Service Order History</h6>
+                        <div class="table-responsive m-t-40">
+                            <table id="orderTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>ID#</th>
@@ -92,3 +88,11 @@
         </div>
     </div>
 @endsection
+@push('custom-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#downloadTable').DataTable();
+            $('#orderTable').DataTable();
+        });
+    </script>
+@endpush
