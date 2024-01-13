@@ -39,13 +39,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach($data['download_history'] as $list)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Deshmukh</td>
-                                    <td>Prohaska</td>
-                                    <td><span class="label label-success">Success</span></td>
-                                    <td>1 week 1 day before (2023-12-20 22:49:07) </td>
+                                    <td>{{$list->item_id}}</td>
+                                    <td>{{$list->site->site_name}}</td>
+                                    <td><a href="{{$list->content_link}}" class="btn btn-info btn-sm">Content Address</a></td>
+                                    <td><span class="label label-success">{{$list->status}}</span></td>
+                                    <td>{{$list->created_at->diffForHumans()}}</td>
                                 </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -67,18 +69,28 @@
                                     <th>ID#</th>
                                     <th>Service Name</th>
                                     <th>Daily Limit</th>
-                                    <th>Asset Name</th>
+                                    <th>Total Limit</th>
+                                    <th>Status</th>
                                     <th>Expiry Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>License Key</td>
-                                    <td>Envato</td>
-                                    <td><span class="label label-danger">Expired</span></td>
-                                    <td>2023-10-01</td>
-                                </tr>
+                                @foreach($data['order_history'] as $index => $item)
+                                    <tr>
+                                        <td>{{$index}}</td>
+                                        <td>{{$item->site->site_name}}</td>
+                                        <td>{{$item->daily_limit}}</td>
+                                        <td>{{$item->total_limit}}</td>
+                                        <td>
+                                            @if($item->status=='used')
+                                                <span class="label  label-success label-success ">Active</span>
+                                            @else
+                                                <span class="label  label-success label-danger ">Inactive</span>
+                                            @endif
+                                          </td>
+                                        <td>{{$item->expiry_date}}</td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

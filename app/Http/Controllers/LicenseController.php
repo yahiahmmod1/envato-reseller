@@ -50,9 +50,10 @@ class LicenseController extends Controller
             $license->status = 'used';
             $license->user_id = $user_id;
             $license->expiry_date = $expiryDate;
+            $license->used_date = date('d-m-Y');
             $license->save();
 
-            return Redirect::back()->with('status', 'Profile updated!');
+            return Redirect::back()->with('status', 'License Activated');
 
         }
     }

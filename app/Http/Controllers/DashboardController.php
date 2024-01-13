@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DownloadList;
+use App\Models\LicenseKey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -11,7 +14,10 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
     public function userDashboard(){
-        return view('panel.dashboard');
+        $user_id =  Auth::user()->id;
+        $data['download_history'] = DownloadList::where('user_id',$user_id)->get();
+        $data['order_history'] = LicenseKey::where('user_id',$user_id)->get();
+        return view('panel.dashboard')->with(compact('data'));
     }
 
     public function downloadHistory(){

@@ -16,9 +16,11 @@ return new class extends Migration
             $table->integer('site_id');
             $table->string('license_key');
             $table->bigInteger('user_id')->nullable();
-            $table->string('created_date');
+            $table->string('used_date');
             $table->string('expiry_date')->nullable();
             $table->integer('days_limit');
+            $table->integer('daily_limit');
+            $table->integer('total_limit');
             $table->enum('status',['new','sold','used','expired'])->default('new');
             $table->timestamps();
         });

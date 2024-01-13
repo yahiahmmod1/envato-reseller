@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class LicenseKey extends Model
 {
     use HasFactory;
-    protected $fillable = ['license_key','user_id','created_date','expiry_date','days_limit','status'];
-}
+    protected $fillable = ['site_id','license_key','user_id','used_date','expiry_date','days_limit','daily_limit','total_limit','status'];
 
+    public function site(){
+        return $this->belongsTo(Site::class,'site_id');
+    }
+}

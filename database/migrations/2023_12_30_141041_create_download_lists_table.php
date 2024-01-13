@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->string('item_id');
-            $table->string('service_type');
+            $table->string('site_id');
             $table->string('content_link');
             $table->integer('cookie_id')->nullable();
-            $table->integer('download_url');
-            $table->integer('download_url_updated');
+            $table->string('download_url');
+            $table->string('download_url_updated');
             $table->enum('status',['pending','success','failed']);
             $table->enum('download_type',['cookie','api']);
             $table->timestamps();

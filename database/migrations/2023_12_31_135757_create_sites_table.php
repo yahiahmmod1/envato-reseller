@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
             $table->string('site_name');
+            $table->string('site_link');
+            $table->string('slug');
+            $table->string('logo');
+            $table->enum('status',['active','inactive'])->default('active');
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 @section('breadchrumb')
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-themecolor">Service: {{$service}} </h3>
+            <h3 class="text-themecolor">Service: <span class="text-capitalize">{{ $data['service'] }} </span></h3>
         </div>
         <div class="col-md-7 align-self-center">
             <ol class="breadcrumb">
@@ -94,11 +94,16 @@
                         </div>
 
                         <div class="row my-2">
-                            <div class="col-lg-9 col-md-12">
-                                <input type="text" class="form-control" placeholder="Enter your envato element content url">
-                            </div>
-                            <div class="col-lg-3 col-md-12">
-                                <input type="submit" class="btn btn-success" value="Generate download link">
+                            <div class="col-lg-12">
+                            <form id="download_form"  accept-charset="UTF-8" class="form-inline">
+                                @csrf
+                                <div class="col-9 mb-2">
+                                    <input type="text" id="content_url" class="form-control" placeholder="Enter your Envato Element content url" style="width: 100%" required>
+                                </div>
+                                <div class="col-3 mb-2">
+                                    <input type="submit" class="btn btn-success" value="Generate download link">
+                                </div>
+                            </form>
                             </div>
                         </div>
 
@@ -107,4 +112,37 @@
             </div>
         </div>
     </div>
+
 @endsection
+
+@push('custom-scripts')
+    <script>
+        $('#download_form').on('submit',function (e){
+            e.preventDefault();
+            const content_url =  $('#content_url').val();
+
+            $.ajax({
+                type:'POST',
+                url:"{{route('download.process')}}",
+                data:{"action":"download", "content_url": content_url },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                success: function(response){
+                    console.log("sma",response);
+                    if(response.status=='success'){
+                        console.log("shaua",response.download_url);
+                        window.open(response.download_url);
+                    }
+                },
+                error: function(err){
+                    console.log('error');
+                }
+            });
+
+            return false;
+        });
+
+    </script>
+@endpush

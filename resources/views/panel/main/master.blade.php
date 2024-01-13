@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Tarique Mosharraf +88 01837664478">
+    <meta name="author" content="Tarique Mosharraf Mobile : +88 01837664478 email: applandsys@gmail.com , Linkedin: https://www.linkedin.com/in/tarique-mosharraf-4092801b7/">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('template/admin_template/assets/images/favicon.png')}}">
     <title>{{ config('app.name', 'Digital Store') }}</title>
     <!-- Bootstrap Core CSS -->
@@ -99,10 +100,11 @@
     @include('panel.main.sidebar')
     <div class="page-wrapper">
        @yield('breadchrumb')
+
         @if($errors->any())
         <div class="row">
             <div class="col-12">
-                <div class="content">
+                <div class="container">
                     <div class="alert alert-danger"> {{$errors->first()}}   <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>
                 </div>
             </div>
@@ -112,7 +114,7 @@
         @if (session('status'))
             <div class="row">
                 <div class="col-12">
-                    <div class="content">
+                    <div class="container">
                         <div class="alert alert-success">   {{ session('status') }}   <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>
                     </div>
                 </div>
@@ -168,9 +170,7 @@
 <script src="{{asset('template/admin_template/assets/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
 <!--morris JavaScript -->
 <script src="{{asset('template/admin_template/assets/plugins/raphael/raphael-min.js')}}"></script>
-<script src="{{asset('template/admin_template/assets/plugins/morrisjs/morris.min.js')}}"></script>
-<!-- Chart JS -->
-<script src="{{asset('template/admin_template/js/dashboard1.js')}}"></script>
+
 <!-- ============================================================== -->
 <script src="{{asset('template/admin_template/assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 

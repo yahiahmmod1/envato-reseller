@@ -1,1 +1,0 @@
-$('#downloadTable').DataTable();

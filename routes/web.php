@@ -21,11 +21,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/download', [DownloadController::class, 'getDownload']);
 Route::get('/user/panel', [DashboardController::class, 'userDashboard'])->name('user.dashboard');
 Route::get('/admin/dashboard', [DashboardController::class, 'userDashboard'])->name('admin.dashboard');
 Route::post('/keyactivation',[LicenseController::class,'activateProcess'])->name('activation.process');
 Route::get('/user/service/{service}',[ServiceController::class,'userService'])->name('service');
+Route::post('/user/download/process',[DownloadController::class,'downloadProcess'])->name('download.process');
 
 
 
