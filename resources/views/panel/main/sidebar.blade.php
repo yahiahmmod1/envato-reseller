@@ -5,7 +5,7 @@
                 <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>
             </div>
             <div class="profile-text">
-                <h5>Markarn Doe</h5>
+                <h5>{{Auth::user()->name}}</h5>
                 <div class="dropdown-menu animated flipInY">
                     <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
                     <div class="dropdown-divider"></div>
