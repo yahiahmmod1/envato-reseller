@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('site_id');
             $table->string('license_key');
             $table->bigInteger('user_id')->nullable();
-            $table->string('used_date');
+            $table->string('used_date')->nullable();;
             $table->string('expiry_date')->nullable();
             $table->integer('days_limit');
             $table->integer('daily_limit');

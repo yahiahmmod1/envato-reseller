@@ -44,13 +44,13 @@ class LicenseController extends Controller
             $user_id = Auth::user()->id;
             $days_limit = $keyExist->days_limit;
 
-            $expiryDate = date('d-m-Y', strtotime( "+$days_limit day"));
+            $expiryDate = date('Y-m-d', strtotime( "+$days_limit day"));
 
             $license = LicenseKey::find($keyExist->id);
             $license->status = 'used';
             $license->user_id = $user_id;
             $license->expiry_date = $expiryDate;
-            $license->used_date = date('d-m-Y');
+            $license->used_date =  date('Y-m-d');;
             $license->save();
 
             return Redirect::back()->with('status', 'License Activated');

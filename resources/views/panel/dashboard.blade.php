@@ -21,10 +21,10 @@
                         <h6 class="card-subtitle">All Service Download History</h6>
                         <div class="alert alert-dark" style="background-color: #FFE0DB; color: #e63946">
                             <strong>Important:</strong>
-                            <ul style="margin-bottom: -3px;">
-                                <li>Files that you have already downloaded, can be re-download within 24 hours by clicking the License Download button.</li>
-                                <li>If do not showing the Licensed Download button, possible reasons is it has been over 24 hours or the licensed download link is not ready yet.</li>
-                                <li>Depending on the file sizes, time may take longer to show the License Download option.</li>
+                            <ul>
+                                <li> For your safety, we recommend buying accounts on our official website, page, or WhatsApp.</li>
+                                <li>   Files that you have already downloaded can be re-downloaded within 24 hours by clicking the License Download button.</li>
+                                <li>    Depending on the file sizes, showing the License Download option may take longer.</li>
                             </ul>
                         </div>
                         <div class="table-responsive m-t-40">

@@ -140,8 +140,23 @@
                 <form id="license-key-form" action="{{route('admin.createLicense')}}" method="POST" accept-charset="UTF-8">
                     @csrf
                     <div class="form-group">
-                        <label for="license-key" class="control-label">Enter your license key, you've received via email.</label>
-                        <input name="license_key" type="text" class="form-control" id="licesnse_key">
+                        <label for="site" class="control-label">Select Site</label>
+                        <select class="form-control" name="site_id">
+                            <option value="1">Envato</option>
+                            <option value="2">FreePik</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="days-limit" class="control-label">After how many dasy will expire.</label>
+                        <input name="days_limit" type="number" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="daily-limit" class="control-label">Dialy Download Limit.</label>
+                        <input name="daily_limit" type="number" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="total-limit" class="control-label">Total Download Limit.</label>
+                        <input name="total_limit" type="number" class="form-control">
                     </div>
                 </form>
             </div>

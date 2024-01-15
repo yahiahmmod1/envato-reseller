@@ -24,11 +24,11 @@
                             <a class="btn btn-info text-white"><i class="mdi mdi-video"> </i> Watch promo video </a>
                         </div>
 
-                        <div class="row mx-2 p-2" style="border: 1px solid red">
+                        <div class="row mx-1 my-4 p-2" style="border: 1px solid red">
                             <div class="col-8">
                                 <div>
-                                    <h2 class="text-danger">You don't have any active services or you've cross your download limits.
-                                        To purchase this service, click on Buy Now button.</h2>
+                                    <h5 class="text-danger">You don't have any active services or you've cross your download limits.
+                                        To purchase this service, click on Buy Now button.</h5>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -41,7 +41,7 @@
                                 <div class="card card-info">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white"> {{ $data['remaining_download'] }} <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                            <div class="col-12"><h2 class=" text-white"> {{ $data['remaining_download'] }} <i class="ti-angle-down font-14  text-default""></i></h2>
                                                 <h6 class="text-white">Remaining Daily Download</h6>
                                             </div>
                                         </div>
@@ -52,7 +52,7 @@
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white"> {{$data['expiry_date']}} <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                            <div class="col-12"><h2 class=" text-white"> {{$data['expiry_date']}} <i class="ti-angle-down font-14  text-default""></i></h2>
                                                 <h6 class=" text-white">Service End Date</h6></div>
                                         </div>
                                     </div>
@@ -62,7 +62,7 @@
                                 <div class="card card-warning">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download_limit'] }} <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download_limit'] }} <i class="ti-angle-down font-14  text-default""></i></h2>
                                                 <h6 class=" text-white">Total download limit</h6></div>
                                         </div>
                                     </div>
@@ -72,44 +72,42 @@
                                 <div class="card card-danger">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download']}} <i class="ti-angle-down font-14 text-danger"></i></h2>
+                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download']}} <i class="ti-angle-up font-14  text-default""></i></h2>
                                                 <h6 class=" text-white">Total downloads file</h6></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="row my-2">
                             <div class="col-lg-12">
-                                <div class="alert alert-primary">Download links are valid for ...</div>
+                                <div class="p-2" style="background-color: #cee5d6; color: #000; border-radius: 5px;     font-size: 14px; ">
+                                    <span class="font-bold text-danger"> ATTENTION </span> Download links are valid for 1 minute. If you click the link after 1 minute, it will not work.
+                                    After downloading your content from here, you can download the license through the download history on the 'Dashboard' tab.
+                                </div>
                             </div>
                         </div>
-
                         <div class="row my-2">
                             <div class="col-lg-12">
-                                <div class="alert alert-danger">Make sure ...</div>
+                                <div class="p-2" style="font-size: 14px; background: #d1ecf1">Make sure the link you entered goes to the envato elements content page.</div>
                             </div>
                         </div>
-
-                        <div class="row my-2">
+                        <div class="row my-5">
                             <div class="col-lg-12">
-                                <div id="warning-message">
-
-                                </div>
-                            <form id="download_form"  accept-charset="UTF-8" class="form-inline">
-                                @csrf
-                                <div class="col-9 mb-2">
-                                    <input type="text" id="content_url" class="form-control" placeholder="Enter your Envato Element content url" style="width: 100%" required>
-                                </div>
-                                <div class="col-3 mb-2">
-                                    <input type="submit" class="btn btn-success" value="Generate download link">
-                                </div>
-                            </form>
+                                <div id="warning-message"></div>
+                                <form id="download_form"  accept-charset="UTF-8">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-9 col-sm-12 col-xs-12">
+                                            <input type="text" id="content_url" class="form-control" placeholder="Enter your Envato Element content url" style="width: 100%" required>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12 col-xs-12 pull-right float-right">
+                                            <input type="submit" class="btn" style="background: #28a745; color: #fff" value="Generate download link">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -117,7 +115,6 @@
     </div>
 
 @endsection
-
 @push('custom-scripts')
     <script>
         $('#download_form').on('submit',function (e){
@@ -133,7 +130,6 @@
                 },
                 dataType: 'json',
                 success: function(response){
-                    console.log("sma",response);
                     if(response.status=='server-fail'){
                         $("#warning-message").html('   <div class="alert alert-danger"> Server Down Please try later  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
                         return;

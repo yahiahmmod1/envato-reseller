@@ -30,15 +30,13 @@ class ServiceController extends Controller
         $userTotalDownload = $this->userTotalDownload($user_id);
         $licenseExpiry = $this->licenseExpiry($user_id, 1);
 
-
-
         $data['service'] = $service;
         $data['daily_limit'] =  $licenseLimit['daily_limit'];
         $data['today_download'] = $userDownload;
         $data['total_download'] = $userTotalDownload->count();
         $data['total_download_limit'] = $licenseLimit['total_limit'];
         $data['remaining_download'] = $licenseLimit['daily_limit'] - $userDownload->count();
-        $data['expiry_date'] = $licenseExpiry->expiry_date;
+        $data['expiry_date'] =$licenseExpiry ? $licenseExpiry->expiry_date : 'N/A';
         return view('panel.service')->with(compact('data'));
     }
 }

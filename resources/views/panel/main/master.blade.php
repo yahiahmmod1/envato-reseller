@@ -24,6 +24,13 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .sidebar-nav>ul>li>a.active {
+            font-weight: 400;
+            background: #e1f7e6;
+            color: #000000;
+        }
+    </style>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -46,16 +53,15 @@
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <div class="navbar-header">
+            <div class="navbar-header" style="overflow: hidden">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <!-- Logo icon --><b>
                         <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo icon -->
-                        <img src="{{asset('template/admin_template/assets/images/logo-light-icon.png')}}" alt="homepage" class="light-logo" />
+                        <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="light-logo" />
                     </b>
                 <span>
-                    DTBDStock
-                <img src="{{asset('template/admin_template/assets/images/logo-light-text.png')}}" class="light-logo" alt="homepage" /></span> </a>
+                  <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="light-logo" /></span> </a>
             </div>
             <div class="navbar-collapse">
                 <ul class="navbar-nav mr-auto mt-md-0">

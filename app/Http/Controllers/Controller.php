@@ -14,7 +14,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
 
     protected function licenseLimit($user_id, $site_id){
-        $today =  date('d-m-Y');
+        $today =  date('Y-m-d');
         $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->where('expiry_date','<',$today)->get();
 
         $daily_limit = 0;
@@ -47,7 +47,12 @@ class Controller extends BaseController
     }
 
     protected function licenseExpiry($user_id, $site_id){
-       return  $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->latest()->first();;
+      $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->latest()->first();;
+       if($licenseKey){
+           return $licenseKey;
+       }else{
+          return  false;
+       }
     }
 
 

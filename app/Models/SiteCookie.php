@@ -9,4 +9,8 @@ class SiteCookie extends Model
 {
     use HasFactory;
     protected $fillable = ['site_id','cookie_content','csrf_token','status'];
+
+    public function site(){
+        return $this->belongsTo(Site::class,'site_id');
+    }
 }

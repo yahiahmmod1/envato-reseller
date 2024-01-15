@@ -16,7 +16,7 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-devider"></li>
-                <li> <a class=" waves-effect waves-dark" href="{{route('admin.dashboard')}}" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">Dashboard </span></a>
+                <li> <a class=" waves-effect waves-dark" href="{{route('user.dashboard')}}" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">Dashboard </span></a>
                 </li>
                 <li class="nav-small-cap">SERVICES</li>
                 <li> <a class=" waves-effect waves-dark" href="{{route('service','envato')}}" aria-expanded="false"><img src="{{asset('template/admin_template/assets/images/envato_logo.png')}}" width="32px"><span class="hide-menu"> Envato </span></a>

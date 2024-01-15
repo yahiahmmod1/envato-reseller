@@ -36,18 +36,17 @@
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
-<section id="wrapper" class="login-register login-sidebar" style="background-image:url({{asset('template/admin_template/assets/images/background/login-register.jpg')}});">
+<section id="wrapper" class="login-register login-sidebar" style="background-image:url({{asset('template/admin_template/assets/images/sign-in.png')}}); background-size: 80%; background-position: -73px">
     <div class="login-box card">
         <div class="card-header">{{ __('Login') }}</div>
         <div class="card-body">
+            <div class="d-flex justify-content-center"><img src="{{asset('template/admin_template/assets/images/logo-square.png')}}" alt="homepage" class="dark-logo" /></div>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <a href="javascript:void(0)" class="text-center db"> Digital Store BD</a>
                 <div class="form-group m-t-40">
                     <div class="col-xs-12">
                         <label for="email" class="">{{ __('Email Address') }}</label>
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -78,17 +77,17 @@
                         </div>
 
                         @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> </div>
+                        <a href="{{ route('password.request') }}" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot password?</a> </div>
                         @endif
                 </div>
                 <div class="form-group text-center m-t-20">
                     <div class="col-xs-12">
-                        <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">Log In</button>
+                        <button class="btn   btn-block text-uppercase waves-effect waves-light my-4" style="background: #4DBC60; color: #FFFFFF" type="submit">Log In</button>
                     </div>
                 </div>
                 <div class="form-group m-b-0">
                     <div class="col-sm-12 text-center">
-                        <p>Don't have an account? <a href="{{route('register')}}" class="text-primary m-l-5"><b>Sign Up</b></a></p>
+                        <p>Don't have an account? <a href="{{route('register')}}" class="text-success m-l-5"><b>Sign Up</b></a></p>
                     </div>
                 </div>
             </form>

@@ -18,8 +18,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Order List</h4>
-                        <h6 class="card-subtitle">All Order</h6>
+                        <h4 class="card-title">License List</h4>
+                        <h6 class="card-subtitle">All License</h6>
                         <div class="table-responsive m-t-40">
                             <table id="downloadTable" class="table table-bordered table-striped">
                                 <thead>

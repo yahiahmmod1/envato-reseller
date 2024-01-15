@@ -111,6 +111,9 @@ class DownloadController extends Controller
 
                $status =    'success';
 
+               $getCookieLog->hits = $getCookieLog->hits+1;
+               $getCookieLog->save();
+
            }else{
                $status =    'failed';
                $downloadedUrl =  null;
