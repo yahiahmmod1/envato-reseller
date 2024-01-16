@@ -32,7 +32,9 @@
                                     </div>
                                 </div>
                             </div>
-                        @elseif(strtotime(date('Y-m-d')) < strtotime($data['expiry_date'] || $data['remaining_download'] <= 0) )
+
+                        @elseif(strtotime($data['expiry_date']) == null || strtotime(date('Y-m-d')) < strtotime($data['expiry_date'] || $data['remaining_download'] <= 0) )
+
                             <div class="row mx-1 my-4 p-2" style="border: 1px solid red">
                                 <div class="col-8 align-content-center">
                                     <div>
