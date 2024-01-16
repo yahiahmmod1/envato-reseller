@@ -30,10 +30,15 @@
             background: #e1f7e6;
             color: #000000;
         }
+
+        .brand-logo{
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
     </style>
 </head>
 
-<body class="fix-header fix-sidebar card-no-border">
+<body class="fix-header fix-sidebar card-no-border" style="background: #EFF6F1">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -56,7 +61,7 @@
             <div class="navbar-header" style="overflow: hidden">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <!-- Logo icon --><b>
-                        <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="dark-logo" />
+                        <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="dark-logo brand-logo" />
                         <!-- Light Logo icon -->
                         <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="light-logo" />
                     </b>

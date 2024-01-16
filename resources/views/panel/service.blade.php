@@ -21,7 +21,7 @@
 
                         <div class="d-flex justify-content-between mb-2">
                             <button class="btn btn-primary"><i class="mdi mdi-check"> </i> Service Status: Running </button>
-                            <a class="btn btn-info text-white"><i class="mdi mdi-video"> </i> Watch promo video </a>
+                            <a class="btn btn-info text-white" href="https://youtu.be/N3446X-MV3o" target="_blank"><i class="mdi mdi-video"> </i> Watch promo video </a>
                         </div>
 
                         @if($data['service']!=='envato')
@@ -32,31 +32,18 @@
                                     </div>
                                 </div>
                             </div>
-                        @elseif(strtotime(date('Y-m-d')) > strtotime($data['expiry_date']) )
+                        @elseif(strtotime(date('Y-m-d')) < strtotime($data['expiry_date'] || $data['remaining_download'] <= 0) )
                             <div class="row mx-1 my-4 p-2" style="border: 1px solid red">
-                                <div class="col-8">
+                                <div class="col-8 align-content-center">
                                     <div>
-                                        <h5 class="text-danger"> You don't have any active services or you've cross your download limits.
-                                            To purchase this service, click on Buy Now button.</h5>
+                                        <h5 class="text-danger"> Oops! Download limits crossed or no active services. Click the Buy Now button to purchase this service and resume uninterrupted access.</h5>
                                     </div>
                                 </div>
                                 <div class="col-4">
-                                    <button class="btn btn-primary  pull-right"><i class="mdi mdi-check"> </i> Buy Now </button>
-                                </div>
-                            </div>
-                        @elseif( $data['remaining_download'] <= 0 )
-                            <div class="row mx-1 my-4 p-2" style="border: 1px solid red">
-                                <div class="col-12 d-flex justify-content-between" style="align-items: center">
-                                    <div>
-                                        <h5 class="text-danger">Your Daily Download Limit is Crossed</h5>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-primary  pull-right"><i class="mdi mdi-check"> </i> Buy Now </button>
-                                    </div>
+                                    <button class="btn   pull-right btn-danger" ><i class="mdi mdi-check"> </i> Buy Now </button>
                                 </div>
                             </div>
                         @else
-
 
                         <div class="row my-2">
                             <div class="col-lg-3 col-md-6">

@@ -72,9 +72,12 @@ class AdminController extends Controller
             ]
         );
 
+        $getMaximumHits = CookieLog::whereNotNull('hits')->max("hits");
+
+
         CookieLog::create([
-            'site_cookie_id'=>$cookieCreated,
-            'hits'=>0
+            'site_cookie_id'=>$cookieCreated->id,
+            'hits'=>$getMaximumHits | 0
         ]);
 
         return Redirect::route('admin.setCookie')->with('status', 'Cookie created');

@@ -13,6 +13,15 @@
 @endsection
 @section('content')
     <div class="container-fluid">
+        <div class="row my-2 mb-4">
+            <div class="col-6">
+                    <a  href="https://digitaltoolsbd.com/" target="_blank"> <img src="{{asset('uploads/banner/banner-10.png')}}" style="width: 100%"></a>
+            </div>
+            <div class="col-6">
+                <a  href="https://digitaltoolsbd.com/" target="_blank"> <img src="{{asset('uploads/banner/banner-11.png')}}"  style="width: 100%"></a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
