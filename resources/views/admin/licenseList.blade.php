@@ -31,6 +31,7 @@
                                     <th>Total Limit</th>
                                     <th>Key String</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -42,8 +43,8 @@
                                         <td>{{$list->daily_limit}}</td>
                                         <td>{{$list->total_limit}}</td>
                                         <td>{{$list->license_key}}</td>
-                                        <td><span class="label label-success">{{$list->status}}</span></td>
-
+                                        <td>@if($list->status=='new') <span class="label label-success">{{$list->status}}</span> @else <span class="label label-danger">{{$list->status}}</span> @endif</td>
+                                        <td>@if($list->status=='new') <a href="{{route('admin.sellLicense',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-check text-info"></i></a>@endif</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

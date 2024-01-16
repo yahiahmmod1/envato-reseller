@@ -42,7 +42,7 @@
                                         <td>{{$list->site->site_name}}</td>
                                         <td>{{ \Illuminate\Support\Str::limit($list->cookie_content, 50, $end='...') }}</td>
                                         <td>{{$list->status}}</td>
-                                        <td><a href="">Delete</a></td>
+                                        <td><a href="{{route('admin.cookieDelete',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-delete text-danger"></i></a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

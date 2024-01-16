@@ -28,6 +28,8 @@ Route::post('/admin/create-license', [AdminController::class, 'createLicense'])-
 Route::get('/admin/license-list', [AdminController::class, 'licenseList'])->name('admin.licenseList');
 Route::get('/admin/cookie-setting', [AdminController::class, 'setCookie'])->name('admin.setCookie');
 Route::post('/admin/cookie-set-process', [AdminController::class, 'setCookieProcess'])->name('admin.setCookieProcess');
+Route::get('/admin/cookie-delete/{id}', [AdminController::class, 'cookieDelete'])->name('admin.cookieDelete');
+Route::get('/admin/sell-license/{id}', [AdminController::class, 'sellLicense'])->name('admin.sellLicense');
 
 Route::post('/keyactivation',[LicenseController::class,'activateProcess'])->name('activation.process');
 Route::get('/user/service/{service}',[ServiceController::class,'userService'])->name('service');

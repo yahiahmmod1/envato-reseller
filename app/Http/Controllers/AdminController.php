@@ -80,4 +80,16 @@ class AdminController extends Controller
         return Redirect::route('admin.setCookie')->with('status', 'Cookie created');
     }
 
+    public function cookieDelete(Request $request, $id){
+            SiteCookie::find($id)->delete();
+        return Redirect::route('admin.setCookie')->with('status', 'Cookie Deleted');
+    }
+
+    public function sellLicense(Request $request, $id){
+        $license = LicenseKey::find($id);
+        $license->status = 'sold';
+        $license->save();
+        return Redirect::route('admin.licenseList')->with('status', 'License Sold');
+    }
+
 }

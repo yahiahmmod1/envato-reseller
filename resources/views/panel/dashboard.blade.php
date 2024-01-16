@@ -77,7 +77,7 @@
                                 <tbody>
                                 @foreach($data['order_history'] as $index => $item)
                                     <tr>
-                                        <td>{{$index}}</td>
+                                        <td>{{$index+1}}</td>
                                         <td>{{$item->site->site_name}}</td>
                                         <td>{{$item->daily_limit}}</td>
                                         <td>{{$item->total_limit}}</td>
