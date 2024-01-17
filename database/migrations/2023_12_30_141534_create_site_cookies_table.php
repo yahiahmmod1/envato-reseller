@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('site_cookies', function (Blueprint $table) {
             $table->id();
             $table->smallInteger('site_id');
+            $table->string('account');
             $table->text('cookie_content');
             $table->text('csrf_token')->nullable();
             $table->enum('status',['active','inactive'])->nullable('active');

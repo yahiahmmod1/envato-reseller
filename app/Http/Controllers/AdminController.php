@@ -60,12 +60,14 @@ class AdminController extends Controller
     public function setCookieProcess(Request $request){
 
         $site_id = $request->input('site_id');
+        $account = $request->input('account');
         $cookie_content = $request->input('cookie_content');
         $csrf_token = $request->input('csrf_token');
 
         $cookieCreated = SiteCookie::create(
             [
                 'site_id'=> $site_id,
+                'account'=> $account,
                 'cookie_content'=>$cookie_content,
                 'csrf_token'=> $csrf_token,
                 'status' => 'active'
@@ -85,6 +87,7 @@ class AdminController extends Controller
 
     public function cookieDelete(Request $request, $id){
             SiteCookie::find($id)->delete();
+            CookieLog::where('site_cookie_id',$id)->delete();
         return Redirect::route('admin.setCookie')->with('status', 'Cookie Deleted');
     }
 

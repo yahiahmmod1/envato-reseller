@@ -30,8 +30,10 @@
                                 <tr>
                                     <th>ID#</th>
                                     <th>Service Name</th>
+                                    <th>Account</th>
                                     <th>Cookie</th>
                                     <th>Status</th>
+                                    <th>Data</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -40,8 +42,10 @@
                                     <tr>
                                         <td>{{$list->id}}</td>
                                         <td>{{$list->site->site_name}}</td>
+                                        <td>{{$list->account}}</td>
                                         <td>{{ \Illuminate\Support\Str::limit($list->cookie_content, 50, $end='...') }}</td>
                                         <td>{{$list->status}}</td>
+                                        <td>{{$list->created_at}}</td>
                                         <td><a href="{{route('admin.cookieDelete',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-delete text-danger"></i></a></td>
                                     </tr>
                                 @endforeach
@@ -70,6 +74,10 @@
                                 <option value="1">Envato</option>
                                 <option value="2">FreePik</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="site" class="control-label">Account</label>
+                            <input name="account" type="text" class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="cookie_content" class="control-label">Cookie</label>

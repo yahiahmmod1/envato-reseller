@@ -35,7 +35,7 @@ class LicenseController extends Controller
                 return Redirect::back()->withErrors(['message' => 'License is Expired']);
             }
 
-            $keyUsed = LicenseKey::where('status','used')->first();
+            $keyUsed = LicenseKey::whereNotNull('user_id')->where('license_key', $license_key)->first();
 
             if($keyUsed){
                 return Redirect::back()->withErrors(['message' => 'License is aleady in Used']);

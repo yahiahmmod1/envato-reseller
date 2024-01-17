@@ -153,6 +153,7 @@
                     }
 
                     if(response.status=='success'){
+                        $("#warning-message").html('<div class="alert alert-success"> Your Download Started <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
                         window.open(response?.download_url);
                     }
                 },

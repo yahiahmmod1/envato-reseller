@@ -63,7 +63,6 @@ class DownloadController extends Controller
             return response()->json(["status"=>'daily-limit-crossed',"message"=>"Daily Limit Crossed"]);
         }
 
-
         $content_url = $request->input('content_url');
 
         $contentExist = DownloadList::where('content_link',$content_url)->where('download_url_updated',"!=",'0')->first();
@@ -74,11 +73,15 @@ class DownloadController extends Controller
 
         $getMinimumHits = CookieLog::whereNotNull('hits')->min("hits");
         $getCookieLog = CookieLog::where('hits', $getMinimumHits)->first();
+
         $siteCookie =  SiteCookie::where('status','active')->findOrFail($getCookieLog->site_cookie_id);
 
         if(!$siteCookie){
             return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Token Missing"]);
         }
+
+        $cookie = $siteCookie->cookie_content;
+        $csrf_token = $siteCookie->csrf_token;
 
         $alreadyDownloaded = DownloadList::where('content_link',$content_url)->where('download_url',"!=",'0')->where('download_url_updated','0')->first();
 
@@ -102,21 +105,15 @@ class DownloadController extends Controller
                $SecondDownloadList =  DownloadList::find($createdDownloadList->id);
 
                 $url =  str_replace('https://elements.envato.com/','',$content_url);
-                $site_cookie = SiteCookie::where('status','active')->get();
-                $cookie = $site_cookie[0]->cookie_content;
-                $csrf_token = $site_cookie[0]->csrf_token;
                 $response = $this->envatoDownload($url, $cookie, $csrf_token);
 
                 if($response->success == "true"){
                     $download_url =    $response->url;
                     $downloadedUrl =  str_replace('\\', '',$download_url);
-
                     $SecondDownloadList->download_url_updated =  $downloadedUrl;
                     $SecondDownloadList->status =  'success';
                     $SecondDownloadList->save();
-
                     $status =    'success';
-
                 }else{
                     $status =    'failed';
                     $downloadedUrl =  $alreadyDownloaded->download_url;
@@ -141,11 +138,7 @@ class DownloadController extends Controller
         ]);
 
        if($DownloadListCreated){
-
            $url =  str_replace('https://elements.envato.com/','',$content_url);
-           $site_cookie = SiteCookie::where('status','active')->get();
-           $cookie = $site_cookie[0]->cookie_content;
-           $csrf_token = $site_cookie[0]->csrf_token;
            $response = $this->envatoDownload($url, $cookie, $csrf_token);
 
            if(isset($response->message)){
