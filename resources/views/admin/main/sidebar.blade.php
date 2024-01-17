@@ -27,7 +27,7 @@
                 <li><a href="#" data-toggle="modal" data-target="#licenseKeyModal" data-whatever="LiceseKey"> <i class="mdi mdi-key-plus"></i> Create License </a></li>
                 <li><a class=" waves-effect waves-dark" href="{{route('admin.licenseList')}}" aria-expanded="false"><i class="mdi mdi-key"></i> License List </a></li>
                 <li class="nav-small-cap">USER MANAGE</li>
-                <li> <a class=" waves-effect waves-dark" href="{{route('admin.setCookie')}}" aria-expanded="false"><i class="mdi mdi-codepen"></i><span class="hide-menu"> User List  </span></a>
+                <li> <a class=" waves-effect waves-dark" href="{{route('admin.userList')}}" aria-expanded="false"><i class="mdi mdi-face-profile"></i><span class="hide-menu"> User List  </span></a>
                 </li>
                 <li class="nav-small-cap">SETTINGS</li>
                     <li> <a class=" waves-effect waves-dark" href="{{route('admin.setCookie')}}" aria-expanded="false"><i class="mdi mdi-codepen"></i><span class="hide-menu"> Cookie  </span></a>

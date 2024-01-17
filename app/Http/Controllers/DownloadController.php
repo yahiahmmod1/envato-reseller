@@ -13,6 +13,21 @@ class DownloadController extends Controller
 {
     //
     public function envatoDownload($url, $cookie, $csrf_token){
+
+//        $activeCooke =  SiteCookie::where('status','active')->pluck('id')->toArray();;
+//
+//        $getMinimumHits = CookieLog::whereNotNull('hits')->whereIn('site_cookie_id',$activeCooke)->min("hits");
+//        $getCookieLog = CookieLog::where('hits', $getMinimumHits)->first();
+//
+//        $siteCookie =  SiteCookie::where('status','active')->findOrFail($getCookieLog->site_cookie_id);
+//
+//        if(!$siteCookie){
+//            return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Token Missing"]);
+//        }
+//
+//        $cookie = $siteCookie->cookie_content;
+//        $csrf_token = $siteCookie->csrf_token;
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -44,7 +59,6 @@ class DownloadController extends Controller
 
         return $response;
     }
-
 
     public function downloadProcess(Request $request){
         $user_id =  Auth::user()->id;

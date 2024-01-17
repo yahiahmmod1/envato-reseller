@@ -15,7 +15,7 @@ class Controller extends BaseController
 
     protected function licenseLimit($user_id, $site_id){
         $today =  date('Y-m-d');
-        $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->where('expiry_date','>',$today)->get();
+        $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->where('expiry_date','>',$today)->where('status','!=','suspend')->get();
 
         $daily_limit = 0;
         $total_limit = 0;
@@ -35,7 +35,6 @@ class Controller extends BaseController
             'total_limit'=>$total_limit
         ];
 
-        // return $licenseKey;
     }
 
     protected function userDownload($user_id){
@@ -54,6 +53,7 @@ class Controller extends BaseController
           return  false;
        }
     }
+
 
 
 }

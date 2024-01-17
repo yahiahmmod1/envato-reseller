@@ -9,7 +9,7 @@
     <meta name="author" content="Tarique Mosharraf Mobile : +88 01837664478 email: applandsys@gmail.com , Linkedin: https://www.linkedin.com/in/tarique-mosharraf-4092801b7/">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('template/admin_template/assets/images/favicon.png')}}">
-    <title>{{ config('app.name', 'Digital Store') }}</title>
+    <title>{{ config('app.name', 'Digital Tools BD') }}</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('template/admin_template/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- morris CSS -->
@@ -55,7 +55,7 @@
             <!-- Logo -->
             <!-- ============================================================== -->
             <div class="navbar-header overflow-hidden">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
                     <!-- Logo icon --><b>
                         <img src="{{asset('template/admin_template/assets/images/logo-icon.png')}}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo icon -->

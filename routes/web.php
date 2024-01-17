@@ -30,6 +30,10 @@ Route::get('/admin/cookie-setting', [AdminController::class, 'setCookie'])->name
 Route::post('/admin/cookie-set-process', [AdminController::class, 'setCookieProcess'])->name('admin.setCookieProcess');
 Route::get('/admin/cookie-delete/{id}', [AdminController::class, 'cookieDelete'])->name('admin.cookieDelete');
 Route::get('/admin/sell-license/{id}', [AdminController::class, 'sellLicense'])->name('admin.sellLicense');
+Route::get('/admin/suspend-license/{id}', [AdminController::class, 'suspendLicense'])->name('admin.suspendLicense');
+Route::get('/admin/activate-license/{id}', [AdminController::class, 'activateLicense'])->name('admin.activateLicense');
+Route::get('/admin/user-list', [AdminController::class, 'userList'])->name('admin.userList');
+Route::get('/admin/user-license/{id}', [AdminController::class, 'userLicense'])->name('admin.userLicense');
 
 Route::post('/keyactivation',[LicenseController::class,'activateProcess'])->name('activation.process');
 Route::get('/user/service/{service}',[ServiceController::class,'userService'])->name('service');

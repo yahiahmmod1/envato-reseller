@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('template/admin_template/assets/images/favicon.png')}}">
-    <title>Digital Store</title>
+    <title>Digital Tools BD</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('template/admin_template/assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Custom CSS -->

@@ -6,6 +6,7 @@ use App\Models\CookieLog;
 use App\Models\DownloadList;
 use App\Models\LicenseKey;
 use App\Models\SiteCookie;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -17,12 +18,10 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
-
     public function adminDashboard(){
         $data['license_list'] = LicenseKey::where('status','sold')->where('status','used')->where('status','sold')->get();
         return view('admin.dashboard')->with(compact('data'));;
     }
-
     public function createLicense(Request $request){
         if($request->isMethod('POST')) {
             $site_id = $request->input('site_id');
@@ -42,7 +41,6 @@ class AdminController extends Controller
                     'status'=>'new'
                 ]
             );
-
             return Redirect::route('admin.licenseList')->with('status', 'License create');
         }
     }
@@ -58,12 +56,10 @@ class AdminController extends Controller
     }
 
     public function setCookieProcess(Request $request){
-
         $site_id = $request->input('site_id');
         $account = $request->input('account');
         $cookie_content = $request->input('cookie_content');
         $csrf_token = $request->input('csrf_token');
-
         $cookieCreated = SiteCookie::create(
             [
                 'site_id'=> $site_id,
@@ -73,10 +69,7 @@ class AdminController extends Controller
                 'status' => 'active'
             ]
         );
-
         $getMaximumHits = CookieLog::whereNotNull('hits')->max("hits");
-
-
         CookieLog::create([
             'site_cookie_id'=>$cookieCreated->id,
             'hits'=>$getMaximumHits | 0
@@ -84,18 +77,39 @@ class AdminController extends Controller
 
         return Redirect::route('admin.setCookie')->with('status', 'Cookie created');
     }
-
     public function cookieDelete(Request $request, $id){
             SiteCookie::find($id)->delete();
             CookieLog::where('site_cookie_id',$id)->delete();
         return Redirect::route('admin.setCookie')->with('status', 'Cookie Deleted');
     }
-
     public function sellLicense(Request $request, $id){
         $license = LicenseKey::find($id);
         $license->status = 'sold';
         $license->save();
         return Redirect::route('admin.licenseList')->with('status', 'License Sold');
+    }
+    public function userList(){
+        $data['user_list'] =  User::where('role','user')->get();
+        return view('admin.userList')->with(compact('data'));
+    }
+    public function userLicense($id){
+        $data['user_license'] =  LicenseKey::where('user_id',$id)->get();
+        $data['user_detail'] =  User::find($id);
+        return view('admin.userLicense')->with(compact('data'));
+    }
+
+    public function suspendLicense(Request $request, $id){
+        $license = LicenseKey::find($id);
+        $license->status = 'suspend';
+        $license->save();
+        return Redirect::back()->with('status', 'License Suspended');
+    }
+
+    public function activateLicense(Request $request, $id){
+        $license = LicenseKey::find($id);
+        $license->status = 'used';
+        $license->save();
+        return Redirect::back()->with('status', 'License Activate for Used');
     }
 
 }

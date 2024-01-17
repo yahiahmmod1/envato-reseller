@@ -73,7 +73,7 @@
                                 <div class="card card-warning">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download_limit'] }} <i class="ti-angle-down font-14  text-default""></i></h2>
+                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download_limit']  }} ({{$data['total_download_limit'] - $data['total_download']}}) <i class="ti-angle-down font-14  text-default""></i></h2>
                                                 <h6 class=" text-white">Total download limit</h6></div>
                                         </div>
                                     </div>

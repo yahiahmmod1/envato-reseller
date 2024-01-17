@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('days_limit');
             $table->integer('daily_limit');
             $table->integer('total_limit');
-            $table->enum('status',['new','sold','used','expired'])->default('new');
+            $table->enum('status',['new','sold','used','expired','suspend'])->default('new');
             $table->timestamps();
         });
     }

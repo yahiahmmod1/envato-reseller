@@ -43,4 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function license(){
+        return $this->hasMany(LicenseKey::class,'user_id','id');
+    }
 }
