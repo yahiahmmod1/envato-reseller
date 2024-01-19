@@ -15,8 +15,8 @@ class DashboardController extends Controller
     }
     public function userDashboard(){
         $user_id =  Auth::user()->id;
-        $data['download_history'] = DownloadList::where('user_id',$user_id)->get();
-        $data['order_history'] = LicenseKey::where('user_id',$user_id)->get();
+        $data['download_history'] = DownloadList::where('user_id',$user_id)->orderByDesc('id')->get();
+        $data['order_history'] = LicenseKey::where('user_id',$user_id)->orderByDesc('id')->get();
         return view('panel.dashboard')->with(compact('data'));
     }
 

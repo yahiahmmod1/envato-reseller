@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\CookieLog;
 use App\Models\DownloadList;
-use App\Models\LicenseKey;
 use App\Models\SiteCookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DownloadController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function envatoDownload($url, $account_name = null){
 
         $activeCooke =  SiteCookie::where('status','active')->pluck('id')->toArray();;
@@ -194,7 +196,6 @@ class DownloadController extends Controller
        }
 
     }
-
 
     public function licenseDownload($downloadId){
         // check if cookie id exist

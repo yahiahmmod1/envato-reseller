@@ -106,6 +106,7 @@
                         <div class="row my-5">
                             <div class="col-lg-12">
                                 <div id="warning-message"></div>
+                                <div id="download-url" class="m-2"></div>
                                 <form id="download_form"  accept-charset="UTF-8">
                                     @csrf
                                     <div class="row">
@@ -128,6 +129,7 @@
 
 @endsection
 @push('custom-scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $('#download_form').on('submit',function (e){
             e.preventDefault();
@@ -143,18 +145,19 @@
                 dataType: 'json',
                 success: function(response){
                     if(response.status=='server-fail'){
-                        $("#warning-message").html('   <div class="alert alert-danger"> Server Down Please try later  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                        $("#warning-message").html('<div class="alert alert-danger"> Server Down Please try later  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
                         return;
                     }
 
                     if(response.status=='daily-limit-crossed'){
-                        $("#warning-message").html('   <div class="alert alert-danger"> Your Daily Limit is Crossed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                        $("#warning-message").html('<div class="alert alert-danger"> Your Daily Limit is Crossed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
                         return;
                     }
 
                     if(response.status=='success'){
                         $("#warning-message").html('<div class="alert alert-success"> Your Download Started <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
                         window.open(response?.download_url);
+                        $("#download-url").html(`<a href="${response?.download_url}" target="_blank"> Download not starting Automatically? Click to Download  </a>`);
                     }
                 },
                 error: function(err){
@@ -164,6 +167,11 @@
 
             return false;
         });
+
+        setTimeout(()=>{
+            $("#warning-message").html('');
+            $("#download-url").html('');
+        },10000);
 
     </script>
 @endpush

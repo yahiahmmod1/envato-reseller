@@ -59,7 +59,9 @@
 @push('custom-scripts')
     <script>
         $(document).ready(function() {
-            $('#downloadTable').DataTable();
+            $('#downloadTable',{
+                order: [[0, 'desc']]
+            }).DataTable();
             $('#orderTable').DataTable();
         });
     </script>

@@ -46,7 +46,7 @@ class AdminController extends Controller
     }
 
     public function licenseList(){
-        $data['license_list'] = LicenseKey::get();
+        $data['license_list'] = LicenseKey::orderByDesc('id')->get();
         return view('admin.licenseList')->with(compact('data'));
     }
 

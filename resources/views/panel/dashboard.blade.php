@@ -36,6 +36,9 @@
                                 <li>    Depending on the file sizes, showing the License Download option may take longer.</li>
                             </ul>
                         </div>
+                        <div id="alert-message">
+
+                        </div>
                         <div class="table-responsive m-t-40">
                             <table id="downloadTable" class="table table-bordered table-striped">
                                 <thead>
@@ -50,12 +53,12 @@
                                 <tbody>
                                 @foreach($data['download_history'] as $list)
                                 <tr>
-                                    <td>{{$list->item_id}}</td>
+                                    <td>{{$list->id}}</td>
                                     <td>{{$list->site->site_name}}</td>
                                     <td>
                                         <a href="{{$list->content_link}}" class="btn btn-info btn-sm" target="_blank">Content Address</a>
                                         @if($list->license_download=='no')
-                                            <a href="#" class="btn btn-success btn-sm" id="licenseDownlaod"> License Download</a>
+                                            <a href="#" class="btn  btn-sm" id="licenseDownlaod{{$list->id}}" onclick="licenseDownload({{$list->id}})" style="background: #4DBC60; color: #fff"> License Download</a>
                                         @endif
                                     </td>
                                     <td><span class="label label-success">{{$list->status}}</span></td>
@@ -117,12 +120,38 @@
 @push('custom-scripts')
     <script>
         $(document).ready(function() {
-            $('#downloadTable').DataTable();
+            $('#downloadTable',{
+                order: [[0, 'desc']]
+            }).DataTable();
             $('#orderTable').DataTable();
         });
 
         function licenseDownload(id){
-
+            $.ajax({
+                type:'GET',
+                url:`/user/license-download/${id}`,
+                data:{"action":"license"},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                success: function(response){
+                   if(response.status){
+                       if(response?.download_url!=''){
+                           window.open(response?.download_url)
+                           $("#alert-message").html(`<div class="alert alert-success"><a href="${response.download_url}" target="_blank"> Downlaod Sarted? or Click to get License   </a> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>`);
+                       }else{
+                           $("#alert-message").html('<div class="alert alert-danger"> Download is not Available for this History <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                       }
+                       $("#licenseDownlaod"+id).hide();
+                   }else{
+                       $("#alert-message").html('<div class="alert alert-danger"> '+response.status+' <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                   }
+                },
+                error: function(err){
+                    $("#alert-message").html('<div class="alert alert-danger"> Server Failed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                }
+            });
         }
 
 
