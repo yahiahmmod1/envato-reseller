@@ -18,10 +18,13 @@ return new class extends Migration
             $table->string('site_id');
             $table->string('content_link');
             $table->integer('cookie_id')->nullable();
+            $table->integer('license_cookie_id')->nullable();
             $table->string('download_url');
+            $table->string('account_name')->nullable();
             $table->string('download_url_updated');
             $table->enum('status',['pending','success','failed']);
             $table->enum('download_type',['cookie','api']);
+            $table->enum('license_download',['no','yes'])->default('no');
             $table->timestamps();
         });
     }

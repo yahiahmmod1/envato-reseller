@@ -12,21 +12,27 @@ use Illuminate\Support\Facades\Auth;
 class DownloadController extends Controller
 {
     //
-    public function envatoDownload($url, $cookie, $csrf_token){
+    public function envatoDownload($url, $account_name = null){
 
-//        $activeCooke =  SiteCookie::where('status','active')->pluck('id')->toArray();;
-//
-//        $getMinimumHits = CookieLog::whereNotNull('hits')->whereIn('site_cookie_id',$activeCooke)->min("hits");
-//        $getCookieLog = CookieLog::where('hits', $getMinimumHits)->first();
-//
-//        $siteCookie =  SiteCookie::where('status','active')->findOrFail($getCookieLog->site_cookie_id);
-//
-//        if(!$siteCookie){
-//            return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Token Missing"]);
-//        }
-//
-//        $cookie = $siteCookie->cookie_content;
-//        $csrf_token = $siteCookie->csrf_token;
+        $activeCooke =  SiteCookie::where('status','active')->pluck('id')->toArray();;
+        $getMinimumHits = CookieLog::whereNotNull('hits')->whereIn('site_cookie_id',$activeCooke)->min("hits");
+        $getCookieLog = CookieLog::where('hits', $getMinimumHits)->first();
+
+        if($account_name != null){
+            $siteCookie =  SiteCookie::where('status','active')->where('account',$account_name)->first();
+        }else{
+            $siteCookie =  SiteCookie::where('status','active')->findOrFail($getCookieLog->site_cookie_id);
+        }
+
+        if(!$siteCookie){
+            return 'no-cookie';
+        }
+
+        $cookie = $siteCookie->cookie_content;
+        $csrf_token = $siteCookie->csrf_token;
+
+        $getCookieLog->hits = $getCookieLog->hits+1;
+        $getCookieLog->save();
 
         $curl = curl_init();
 
@@ -57,17 +63,24 @@ class DownloadController extends Controller
 
         curl_close($curl);
 
-        return $response;
+        if(isset($response->message)){
+            if($response->message=='CSRF token mismatch.'){
+                $siteCookie->status = 'inactive';
+                $siteCookie->save();
+                return false;
+            }
+        }else{
+            $response->cookie_id =  $siteCookie->id;
+            $response->account_name =  $siteCookie->account;
+            return $response;
+        }
     }
 
     public function downloadProcess(Request $request){
         $user_id =  Auth::user()->id;
-
         $licenseLimit = $this->licenseLimit($user_id,1);
-
         $userDownload = $this->userDownload($user_id);
-
-       $licenseExpire =  $this->licenseExpiry($user_id, 1);
+        $licenseExpire =  $this->licenseExpiry($user_id, 1);
 
         if(!$licenseExpire){
             return response()->json(["status"=>'Your License Expired']);
@@ -85,24 +98,9 @@ class DownloadController extends Controller
             return response()->json(["status"=>'success','download_url'=> $contentExist->download_url_updated,"message"=>"Already in Server"]);
         }
 
-        $getMinimumHits = CookieLog::whereNotNull('hits')->min("hits");
-        $getCookieLog = CookieLog::where('hits', $getMinimumHits)->first();
-
-        $siteCookie =  SiteCookie::where('status','active')->findOrFail($getCookieLog->site_cookie_id);
-
-        if(!$siteCookie){
-            return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Token Missing"]);
-        }
-
-        $cookie = $siteCookie->cookie_content;
-        $csrf_token = $siteCookie->csrf_token;
-
         $alreadyDownloaded = DownloadList::where('content_link',$content_url)->where('download_url',"!=",'0')->where('download_url_updated','0')->first();
 
         if($alreadyDownloaded){
-
-            $getCookieLog->hits = $getCookieLog->hits+1;
-            $getCookieLog->save();
 
             $createdDownloadList = DownloadList::create([
                 'user_id'=> $user_id,
@@ -111,7 +109,7 @@ class DownloadController extends Controller
                 'content_link'=>  $content_url,
                 'download_url'=>  $alreadyDownloaded->download_url,
                 'download_url_updated'=>  '0',
-                'cookie_id'=>$siteCookie->id,
+                'cookie_id'=>0,
                 'download_type'=>'cookie'
             ]);
 
@@ -119,13 +117,21 @@ class DownloadController extends Controller
                $SecondDownloadList =  DownloadList::find($createdDownloadList->id);
 
                 $url =  str_replace('https://elements.envato.com/','',$content_url);
-                $response = $this->envatoDownload($url, $cookie, $csrf_token);
+                $response = $this->envatoDownload($url);
+
+                if($response == 'no-cookie'){
+                    return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Server Down"]);
+                }elseif(!$response){
+                    $response = $this->envatoDownload($url);
+                }
 
                 if($response->success == "true"){
                     $download_url =    $response->url;
                     $downloadedUrl =  str_replace('\\', '',$download_url);
                     $SecondDownloadList->download_url_updated =  $downloadedUrl;
                     $SecondDownloadList->status =  'success';
+                    $SecondDownloadList->cookie_id =  $response->cookie_id ;
+                    $SecondDownloadList->account_name =  $response->account_name ;
                     $SecondDownloadList->save();
                     $status =    'success';
                 }else{
@@ -147,21 +153,20 @@ class DownloadController extends Controller
             'content_link'=>  $content_url,
             'download_url'=>  '0',
             'download_url_updated'=>  '0',
-            'cookie_id'=>$siteCookie->id,
+            'cookie_id'=>0,
             'download_type'=>'cookie'
         ]);
 
        if($DownloadListCreated){
            $url =  str_replace('https://elements.envato.com/','',$content_url);
-           $response = $this->envatoDownload($url, $cookie, $csrf_token);
 
-           if(isset($response->message)){
-               if($response->message=='CSRF token mismatch.'){
-                   $siteCookie->status = 'inactive';
-                   $siteCookie->save();
-                   return response()->json(["status"=>'server-fail',  "message"=>"Token Expired"]);
-               }
-           }
+           $response = $this->envatoDownload($url);
+            if($response == 'no-cookie'){
+                return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Server Down"]);
+            }elseif(!$response){
+                $response = $this->envatoDownload($url);
+            }
+
 
            if($response->success == "true"){
                $download_url =    $response->url;
@@ -170,12 +175,12 @@ class DownloadController extends Controller
                $DownloadList = DownloadList::find($DownloadListCreated->id);
                $DownloadList->status = 'success';
 
-               $DownloadList->download_url =  $downloadedUrl;
+               $DownloadList->download_url  =  $downloadedUrl;
+               $DownloadList->cookie_id     =  $response->cookie_id;
+               $DownloadList->account_name  =  $response->account_name;
                $DownloadList->save();
 
                $status =    'success';
-               $getCookieLog->hits = $getCookieLog->hits+1;
-               $getCookieLog->save();
 
            }else{
                $status =    'failed';
@@ -188,7 +193,34 @@ class DownloadController extends Controller
            return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Not created in List"]);
        }
 
+    }
+
+
+    public function licenseDownload($downloadId){
+        // check if cookie id exist
+        $DownloadList = DownloadList::find($downloadId);
+        $url = $DownloadList->content_link;
+        $account_name = $DownloadList->account_name;
+        if($account_name!=null){
+          $response =   $this->envatoDownload($url, $account_name);
+            if($response->success == "true"){
+                $download_url =    $response->url;
+                $downloadedUrl =  str_replace('\\', '',$download_url);
+                $DownloadList->download_url_updated =  $downloadedUrl;
+                $DownloadList->status =  'success';
+                $DownloadList->license_cookie_id =  $response->cookie_id ;
+                $DownloadList->license_download =  'yes';
+                $DownloadList->save();
+                $status =    'success';
+                 return response()->json(["status"=>$status,'download_url'=> $downloadedUrl, "message"=>"First Download"]);
+            }else{
+                return response()->json(["status"=>'failed','download_url'=> '', "message"=>"License failed. Download Again please"]);
+            }
+        }else{
+            return response()->json(["status"=>'failed','download_url'=> '', "message"=>"License not available now. Download Again please"]);
+        }
 
     }
+
 
 }

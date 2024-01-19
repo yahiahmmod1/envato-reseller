@@ -52,7 +52,12 @@
                                 <tr>
                                     <td>{{$list->item_id}}</td>
                                     <td>{{$list->site->site_name}}</td>
-                                    <td><a href="{{$list->content_link}}" class="btn btn-info btn-sm">Content Address</a></td>
+                                    <td>
+                                        <a href="{{$list->content_link}}" class="btn btn-info btn-sm" target="_blank">Content Address</a>
+                                        @if($list->license_download=='no')
+                                            <a href="#" class="btn btn-success btn-sm" id="licenseDownlaod"> License Download</a>
+                                        @endif
+                                    </td>
                                     <td><span class="label label-success">{{$list->status}}</span></td>
                                     <td>{{$list->created_at->diffForHumans()}}</td>
                                 </tr>
@@ -115,5 +120,13 @@
             $('#downloadTable').DataTable();
             $('#orderTable').DataTable();
         });
-    </script>
+
+        function licenseDownload(id){
+
+        }
+
+
+
+        </script>
+
 @endpush

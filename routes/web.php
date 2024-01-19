@@ -35,9 +35,11 @@ Route::get('/admin/activate-license/{id}', [AdminController::class, 'activateLic
 Route::get('/admin/user-list', [AdminController::class, 'userList'])->name('admin.userList');
 Route::get('/admin/user-license/{id}', [AdminController::class, 'userLicense'])->name('admin.userLicense');
 
+
 Route::post('/keyactivation',[LicenseController::class,'activateProcess'])->name('activation.process');
 Route::get('/user/service/{service}',[ServiceController::class,'userService'])->name('service');
 Route::post('/user/download/process',[DownloadController::class,'downloadProcess'])->name('download.process');
+Route::get('/user/license-download/{id}', [DownloadController::class, 'licenseDownload'])->name('user.licenseDownload');
 
 
 
