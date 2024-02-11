@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SiteCookie extends Model
 {
     use HasFactory;
-    protected $fillable = ['site_id','account','cookie_content','csrf_token','status'];
+    protected $fillable = ['site_id','account','cookie_content','csrf_token','cookie_source','status'];
 
     public function site(){
         return $this->belongsTo(Site::class,'site_id');

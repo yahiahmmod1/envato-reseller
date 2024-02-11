@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\EnvatoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,8 +42,10 @@ Route::get('/user/service/{service}',[ServiceController::class,'userService'])->
 Route::post('/user/download/process',[DownloadController::class,'downloadProcess'])->name('download.process');
 Route::get('/user/license-download/{id}', [DownloadController::class, 'licenseDownload'])->name('user.licenseDownload');
 
-
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/envato-test',[EnvatoController::class,'envatoTest'])->name('envatotest');
+Route::get('/envato-test2',[EnvatoController::class,'envatoTest2'])->name('envatotest2');
+Route::get('/envato-test3',[EnvatoController::class,'envatoTest3'])->name('envatotest3');

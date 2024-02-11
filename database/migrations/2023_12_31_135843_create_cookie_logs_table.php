@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('cookie_logs', function (Blueprint $table) {
             $table->id();
             $table->integer('site_cookie_id');
+            $table->string('source')->nullable();
             $table->integer('hits');
             $table->timestamps();
         });

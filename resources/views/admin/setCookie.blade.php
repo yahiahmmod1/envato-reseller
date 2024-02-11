@@ -23,7 +23,6 @@
                             <h6 class="card-subtitle">All Cookie</h6>
                             <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#cookieModal">Set Cookie</button>
                         </div>
-
                         <div class="table-responsive m-t-40">
                             <table id="downloadTable" class="table table-bordered table-striped">
                                 <thead>
@@ -31,6 +30,7 @@
                                     <th>ID#</th>
                                     <th>Service Name</th>
                                     <th>Account</th>
+                                    <th>Source</th>
                                     <th>Cookie</th>
                                     <th>Status</th>
                                     <th>Data</th>
@@ -43,6 +43,7 @@
                                         <td>{{$list->id}}</td>
                                         <td>{{$list->site->site_name}}</td>
                                         <td>{{$list->account}}</td>
+                                        <td>{{$list->cookie_source}}</td>
                                         <td>{{ \Illuminate\Support\Str::limit($list->cookie_content, 50, $end='...') }}</td>
                                         <td>{{$list->status}}</td>
                                         <td>{{$list->created_at}}</td>
@@ -76,8 +77,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="site" class="control-label">Account</label>
+                            <label for="site" class="control-label">Account / Project Name</label>
                             <input name="account" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="site" class="control-label">Cookie Source</label>
+                            <select class="form-control" name="cookie_source">
+                                <option value="d5stock">D5Stock</option>
+                                <option value="envato-element">Evnato Element</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="cookie_content" class="control-label">Cookie</label>

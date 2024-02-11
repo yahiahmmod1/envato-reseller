@@ -58,12 +58,14 @@ class AdminController extends Controller
     public function setCookieProcess(Request $request){
         $site_id = $request->input('site_id');
         $account = $request->input('account');
+        $cookie_source = $request->input('cookie_source');
         $cookie_content = $request->input('cookie_content');
         $csrf_token = $request->input('csrf_token');
         $cookieCreated = SiteCookie::create(
             [
                 'site_id'=> $site_id,
                 'account'=> $account,
+                'cookie_source'=> $cookie_source,
                 'cookie_content'=>$cookie_content,
                 'csrf_token'=> $csrf_token,
                 'status' => 'active'
@@ -72,6 +74,7 @@ class AdminController extends Controller
         $getMaximumHits = CookieLog::whereNotNull('hits')->max("hits");
         CookieLog::create([
             'site_cookie_id'=>$cookieCreated->id,
+            'source'=>$cookie_source,
             'hits'=>$getMaximumHits | 0
         ]);
 

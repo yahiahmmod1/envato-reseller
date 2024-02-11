@@ -15,4 +15,8 @@ class DownloadList extends Model
         return $this->belongsTo(Site::class,'site_id');
     }
 
+    public function cookie(){
+        return $this->belongsTo(SiteCookie::class,'cookie_id');
+    }
+
 }
