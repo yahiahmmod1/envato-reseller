@@ -14,12 +14,16 @@
 @section('content')
     <div class="container-fluid">
         <div class="row my-2 mb-4">
+            @if(count($data['banner_left']))
             <div class="col-6">
-                    <a  href="https://digitaltoolsbd.com/" target="_blank"> <img src="{{asset('uploads/banner/banner-10.png')}}" style="width: 100%"></a>
+                <a  href="{{$data['banner_left'][0]['goto_url']}}" target="_blank"> <img src="{{asset('uploads/banner/'. $data['banner_left'][0]['image_name'])}}" style="width: 100%"></a>
             </div>
+            @endif
+            @if(count($data['banner_right']))
             <div class="col-6">
-                <a  href="https://digitaltoolsbd.com/" target="_blank"> <img src="{{asset('uploads/banner/banner-11.png')}}"  style="width: 100%"></a>
+                <a  href="{{$data['banner_right'][0]['goto_url']}}" target="_blank"> <img src="{{asset('uploads/banner/'. $data['banner_right'][0]['image_name'])}}" style="width: 100%"></a>
             </div>
+                @endif
         </div>
 
         <div class="row">

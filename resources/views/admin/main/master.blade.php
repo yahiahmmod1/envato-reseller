@@ -31,6 +31,15 @@
             background: #e1f7e6;
             color: #000000;
         }
+
+        div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+            border: 0;
+            border-radius: 0.25em;
+            background: initial;
+            background-color: #ec3212;
+            color: #fff;
+            font-size: 1em;
+        }
     </style>
 </head>
 

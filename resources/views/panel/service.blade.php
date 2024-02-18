@@ -105,6 +105,13 @@
                         </div>
                         <div class="row my-5">
                             <div class="col-lg-12">
+                                <div id="loader" style="height: 50px; display:none" >
+                                    <img src="{{asset('images/loader.gif')}}"
+                                         style="width: 50px;
+                                            height: 50px;
+                                            position: absolute;
+                                            left: 44%;">
+                                </div>
                                 <div id="warning-message"></div>
                                 <div id="download-url" class="m-2"></div>
                                 <form id="download_form"  accept-charset="UTF-8">
@@ -114,7 +121,7 @@
                                             <input type="text" id="content_url" class="form-control" placeholder="Enter your Envato Element content url" style="width: 100%" required>
                                         </div>
                                         <div class="col-md-3 col-sm-12 col-xs-12 pull-right float-right">
-                                            <input type="submit" class="btn" style="background: #28a745; color: #fff" value="Generate download link">
+                                            <input id="download_button" type="submit" class="btn" style="background: #28a745; color: #fff" value="Generate download link">
                                         </div>
                                     </div>
                                 </form>
@@ -131,6 +138,7 @@
 @push('custom-scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+
         $('#download_form').on('submit',function (e){
             e.preventDefault();
             const content_url =  $('#content_url').val();
@@ -143,14 +151,32 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 dataType: 'json',
+                beforeSend: function() {
+                    $("#loader").show();
+                    $("#download_button").attr('disabled','disabled');
+                },
                 success: function(response){
                     if(response.status=='server-fail'){
                         $("#warning-message").html('<div class="alert alert-danger"> Server Down Please try later  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Server Failed!",
+                            confirmButtonColor: "#F27474",
+                            footer: '<a href="#">Server Failed</a>'
+                        });
                         return;
                     }
 
                     if(response.status=='daily-limit-crossed'){
                         $("#warning-message").html('<div class="alert alert-danger"> Your Daily Limit is Crossed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Server Failed!",
+                            confirmButtonColor: "#F27474",
+                            footer: '<a href="#">Your Daily Limit is Crossed</a>'
+                        });
                         return;
                     }
 
@@ -158,10 +184,30 @@
                         $("#warning-message").html('<div class="alert alert-success"> Your Download Started <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
                         window.open(response?.download_url);
                         $("#download-url").html(`<a href="${response?.download_url}" target="_blank"> Download not starting Automatically? Click to Download  </a>`);
+
+                        Swal.fire({
+                            icon: "success",
+                            title: "Download is starting Automatically",
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
                     }
+
+                    $("#loader").hide();
+                    $("#download_button").removeAttr('disabled')
+
+
+
                 },
                 error: function(err){
-                    $("#warning-message").html('<div class="alert alert-danger"> Server Failed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                    $("#loader").hide();
+                    $("#download_button").removeAttr('disabled')
+
+                    $("#warning-message").html('<div class="alert alert-danger"> Server Error  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                },
+                complete: function(data) {
+                    $("#loader").hide();
+                    $("#download_button").removeAttr('disabled')
                 }
             });
 

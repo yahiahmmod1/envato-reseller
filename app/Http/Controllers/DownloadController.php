@@ -29,6 +29,7 @@ class DownloadController extends Controller
         }
 
         if(!$siteCookie){
+            app()->make('LogService')->createLog('No Cookie found','site cookie exist check','envatoDownload');
             return 'no-cookie';
         }
 
@@ -100,37 +101,40 @@ class DownloadController extends Controller
                 ),
             ));
         }else{
-            if($tryCount <  $activeCookieCount ) {
-                $this->envatoDownload($url);
-            }else{
-                return 'no-cookie';
-            }
+            app()->make('LogService')->createLog('Undefined cookie source','else cookie surce','envatoDownload');
+            return 'undefined-source';
         }
 
         $response = json_decode(curl_exec($curl));
         curl_close($curl);
 
+        app()->make('LogService')->createLog('Cookie Id: '.$siteCookie->id.' / '.json_encode($response),'response receive','envatoDownload');
 
         if( $siteCookie->cookie_source=='d5stock'){
             $errors =  isset($response->message);
           if(!$errors){
               $download_url  =   $response->url;
+              app()->make('LogService')->createLog('d5 Success','check error not found for d5','process');
           }
         }else if($siteCookie->cookie_source=='envato-element'){
             $errors =  isset($response->errors);
-            $download_url  =  $response->data->attributes->downloadUrl;
-            $license_url  =  $response->data->attributes->textDownloadUrl;
+            $download_url  =  isset($response->data) ? $response->data->attributes->downloadUrl : '';
+            $license_url  = isset($response->data) ?  $response->data->attributes->textDownloadUrl : '';
         }else{
-            return 'no-cookie';
+            app()->make('LogService')->createLog('undefined-source-response','check error not found for d5','process');
+            return 'undefined-source-response';
         }
 
         if($errors){
+            app()->make('LogService')->createLog('Inactive  Response:  '. $response,' Line number 129', 'envatoDownload');
+            $siteCookie->status = 'inactive';
+            $siteCookie->save();
             if($tryCount <  $activeCookieCount ){
-                $tryCount++;
-                $siteCookie->status = 'inactive';
-                $siteCookie->save();
+                app()->make('LogService')->createLog('Try count is greater than total cookei set','try count:'.$tryCount,'envatoDownload');
                 $this->envatoDownload($url);
+                $tryCount++;
             }else{
+                app()->make('LogService')->createLog('No cookie','Line number 137','process');
                 return 'no-cookie';
             }
         }else{
@@ -140,6 +144,8 @@ class DownloadController extends Controller
             $result['license_url'] =  $license_url;
             $result['source'] = $siteCookie->cookie_source;
             $result['download_success'] = true;
+
+            app()->make('LogService')->createLog('Download Success','Line number 148','envatoDownload');
             return $result;
         }
     }
@@ -151,10 +157,12 @@ class DownloadController extends Controller
         $licenseExpire =  $this->licenseExpiry($user_id, 1);
 
         if(!$licenseExpire){
+            app()->make('LogService')->createLog('License Expired for '.   $user_id,'Line number 160','envatoDownload');
             return response()->json(["status"=>'Your License Expired']);
         }
 
         if($licenseLimit['daily_limit'] <= $userDownload->count()){
+            app()->make('LogService')->createLog('Daily Limit crossed '.   $user_id,'Line number 160','envatoDownload');
             return response()->json(["status"=>'daily-limit-crossed',"message"=>"Daily Limit Crossed"]);
         }
 
@@ -174,7 +182,7 @@ class DownloadController extends Controller
         ]);
 
        if($DownloadListCreated){
-
+          // app()->make('LogService')->createLog('Download List Created '.   $user_id,'Line number 185','downloadProcess');
            $url =  str_replace('https://elements.envato.com/','',$content_url);
            $response = $this->envatoDownload($url);
 
@@ -182,7 +190,7 @@ class DownloadController extends Controller
                return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Server Down"]); // NO active Cookie //
            }
 
-           if($response['download_success']){
+           if(isset($response['download_success'])){
                $download_url =    $response['download_url'];
                $downloadedUrl =  str_replace('\\', '',$download_url);
 
@@ -199,6 +207,8 @@ class DownloadController extends Controller
                }
                $DownloadList->save();
                $status =    'success';
+
+               app()->make('LogService')->createLog('Download Success User:'.   $user_id,' Line number 211','envatoDownload');
            }else{
                $downloadedUrl =  null;
                $DownloadList = DownloadList::find($DownloadListCreated->id);
@@ -207,11 +217,15 @@ class DownloadController extends Controller
                $DownloadList->account_name  =  $response['account_name'];
                $DownloadList->save();
                $status =    'failed';
+
+               app()->make('LogService')->createLog('Download failed '.   $user_id,'Line number 221','envatoDownload');
            }
 
+           app()->make('LogService')->createLog('Process Completed '.   $user_id,'Line number 224','envatoDownload');
            return response()->json(["status"=>$status,'download_url'=> $downloadedUrl, "message"=>"Download Success"]);
 
        }else{
+           app()->make('LogService')->createLog('Process Failed'.   $user_id,' Line number 228','envatoDownload');
            return response()->json(["status"=>'failed','download_url'=> '', "message"=>"Not created in List"]);
        }
 
@@ -252,7 +266,7 @@ class DownloadController extends Controller
             $response = curl_exec($curl);
             curl_close($curl);
 
-          //  File::put(public_path('license_files/testlicense.txt'), $response);
+            app()->make('LogService')->createLog('License  Download Envato Element Cookie Id '. $DownloadList->cookie->id,'Line number 269','downloadProcess');
 
             $filePathArray =  explode('/',$DownloadList->download_url_updated);
 
@@ -293,8 +307,11 @@ class DownloadController extends Controller
         }
     }
 
-    public function envatoElementLicense($downloadId){
-        $DownloadList = DownloadList::find($downloadId);
+    public function testService(){
+
+        app()->make('LogService')->createLog('Test log','Test check','test type');
+
+        dd(app()->make('LogService')->testService());
     }
 
 

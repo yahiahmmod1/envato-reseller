@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLogs;
+use App\Models\Banner;
 use App\Models\CookieLog;
 use App\Models\DownloadList;
 use App\Models\LicenseKey;
 use App\Models\SiteCookie;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
+use App\Models\Files;
+use App\Traits\Upload; //import the trait
+use Image;
+use File;
+
 class AdminController extends Controller
 {
+
+    use Upload;//add this trait
     public function __construct()
     {
         $this->middleware('auth');
@@ -80,6 +90,23 @@ class AdminController extends Controller
 
         return Redirect::route('admin.setCookie')->with('status', 'Cookie created');
     }
+
+    public function cookieEdit(Request $request, siteCookie $id){
+        if($request->method()=='POST'){
+            $id->site_id= $request->site_id;
+            $id->account= $request->account;
+            $id->cookie_source= $request->cookie_source;
+            $id->cookie_content= $request->cookie_content;
+            $id->csrf_token = $request->csrf_token;
+            $id->status = $request->status;
+            $id->save();
+            return Redirect::route('admin.setCookie')->with('status', 'Cookie Updated');
+        }else{
+            $data['site_cookie'] =  $id;
+            return view('admin.editCookie')->with(compact('data'));
+        }
+
+    }
     public function cookieDelete(Request $request, $id){
             SiteCookie::find($id)->delete();
             CookieLog::where('site_cookie_id',$id)->delete();
@@ -113,6 +140,50 @@ class AdminController extends Controller
         $license->status = 'used';
         $license->save();
         return Redirect::back()->with('status', 'License Activate for Used');
+    }
+
+    public function setBanner(){
+        $data['banner_list'] =  Banner::get();
+        return view('admin.bannerList')->with(compact('data'));
+    }
+
+    public function createBanner(Request $request){
+
+        if ($request->hasFile('file')) {
+
+            $image = $request->file('file');
+
+            $img = $image->getClientOriginalName();
+          //  dd( $img);
+
+            $request->validate([
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+            ]);
+
+            $image->move(public_path('uploads/banner'), $img );
+
+            Banner::create([
+                'image_name'=>$img,
+                'goto_url'=>$request->input('goto_url'),
+                'position'=>$request->input('position')
+            ]);
+            return Redirect::back()->with('status', 'File is Uploaded');
+        }
+    }
+
+    public function deleteBanner($id){
+        Banner::find($id)->delete();
+        return Redirect::back()->with('status', 'Banner is Deleted');
+    }
+
+    public function logList(){
+        $data['log_list'] =  ActivityLogs::orderBy('id', 'desc')->paginate(50);
+        return view('admin.logList')->with(compact('data'));
+    }
+
+    public function clearLog(){
+        ActivityLogs::truncate();
+        return Redirect::back()->with('status', 'Log Cleared');
     }
 
 }

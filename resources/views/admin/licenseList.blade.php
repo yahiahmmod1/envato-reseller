@@ -42,7 +42,11 @@
                                         <td>{{$list->days_limit}}</td>
                                         <td>{{$list->daily_limit}}</td>
                                         <td>{{$list->total_limit}}</td>
-                                        <td>{{$list->license_key}}</td>
+                                        <td>{{$list->license_key}}
+                                            <p style="font-size: 10px">
+                                                {{@$list->user->email}}  (Used: {{$list->used_date}}) / (Expiry: {{$list->expiry_date}})
+                                            </p>
+                                        </td>
                                         <td>@if($list->status=='new') <span class="label label-success">{{$list->status}}</span> @else <span class="label label-danger">{{$list->status}}</span> @endif</td>
                                         <td>@if($list->status=='new') <a href="{{route('admin.sellLicense',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-check text-info"></i></a>@endif</td>
                                     </tr>

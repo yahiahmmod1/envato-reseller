@@ -44,10 +44,13 @@
                                         <td>{{$list->site->site_name}}</td>
                                         <td>{{$list->account}}</td>
                                         <td>{{$list->cookie_source}}</td>
-                                        <td>{{ \Illuminate\Support\Str::limit($list->cookie_content, 50, $end='...') }}</td>
+                                        <td>{{ \Illuminate\Support\Str::limit($list->cookie_content, 20, $end='...') }}</td>
                                         <td>{{$list->status}}</td>
                                         <td>{{$list->created_at}}</td>
-                                        <td><a href="{{route('admin.cookieDelete',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-delete text-danger"></i></a></td>
+                                        <td>
+                                            <a href="{{route('admin.cookieDelete',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-delete text-danger"></i></a>
+                                            <a href="{{route('admin.cookieEdit',$list->id)}}"><i class="mdi mdi-pencil-circle text-warning"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
