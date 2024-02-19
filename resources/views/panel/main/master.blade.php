@@ -45,6 +45,8 @@
             font-size: 1em;
         }
     </style>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border" style="background: #EFF6F1">

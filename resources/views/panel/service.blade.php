@@ -139,77 +139,64 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
-        $('#download_form').on('submit',function (e){
-            e.preventDefault();
-            const content_url =  $('#content_url').val();
+        const cookie_count = "{{ $data['cookie_count'] }}";
+        let counter =  1;
 
-            $.ajax({
-                type:'POST',
-                url:"{{route('download.process')}}",
-                data:{"action":"download", "content_url": content_url },
+      async function processDownload(content_url){
+          counter++;
+            let {data} = await axios.post('{{route('download.process')}}', {"action":"download", "content_url": content_url }, {
                 headers: {
+                    'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                beforeSend: function() {
-                    $("#loader").show();
-                    $("#download_button").attr('disabled','disabled');
-                },
-                success: function(response){
-                    if(response.status=='server-fail'){
-                        $("#warning-message").html('<div class="alert alert-danger"> Server Down Please try later  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Server Failed!",
-                            confirmButtonColor: "#F27474",
-                            footer: '<a href="#">Server Failed</a>'
-                        });
-                        return;
-                    }
-
-                    if(response.status=='daily-limit-crossed'){
-                        $("#warning-message").html('<div class="alert alert-danger"> Your Daily Limit is Crossed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Server Failed!",
-                            confirmButtonColor: "#F27474",
-                            footer: '<a href="#">Your Daily Limit is Crossed</a>'
-                        });
-                        return;
-                    }
-
-                    if(response.status=='success'){
-                        $("#warning-message").html('<div class="alert alert-success"> Your Download Started <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
-                        window.open(response?.download_url);
-                        $("#download-url").html(`<a href="${response?.download_url}" target="_blank"> Download not starting Automatically? Click to Download  </a>`);
-
-                        Swal.fire({
-                            icon: "success",
-                            title: "Download is starting Automatically",
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-                    }
-
-                    $("#loader").hide();
-                    $("#download_button").removeAttr('disabled')
-
-
-
-                },
-                error: function(err){
-                    $("#loader").hide();
-                    $("#download_button").removeAttr('disabled')
-
-                    $("#warning-message").html('<div class="alert alert-danger"> Server Error  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
-                },
-                complete: function(data) {
-                    $("#loader").hide();
-                    $("#download_button").removeAttr('disabled')
                 }
-            });
+            })
+
+          if(data.status=='inactive'){
+              if(cookie_count > counter){
+                  data =  processDownload(content_url);
+              }else{
+                  data.status = 'no-cookie';
+              }
+          }
+          return data;
+        }
+
+        $('#download_form').on('submit',async function (e) {
+            e.preventDefault();
+
+            $("#loader").show();
+            $("#download_button").attr('disabled','disabled');
+
+            const content_url = $('#content_url').val();
+            const responseData = await processDownload(content_url);
+
+            $("#loader").hide();
+            $("#download_button").removeAttr('disabled')
+
+            if(responseData.status=='daily-limit-crossed'){
+                $("#warning-message").html('<div class="alert alert-danger"> Your Daily Limit is Crossed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Server Failed!",
+                    confirmButtonColor: "#F27474",
+                    footer: '<a href="#">Your Daily Limit is Crossed</a>'
+                });
+                return;
+            }
+
+            if(responseData.status=='success'){
+                $("#warning-message").html('<div class="alert alert-success"> Your Download Started <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                window.open(responseData?.download_url);
+                $("#download-url").html(`<a href="${responseData?.download_url}" target="_blank"> Download not starting Automatically? Click to Download  </a>`);
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Download is starting Automatically",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            }
 
             return false;
         });

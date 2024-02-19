@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SiteCookie;
 use Illuminate\Http\Request;
 use App\Models\Site;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,7 @@ class ServiceController extends Controller
         $data['total_download_limit'] = $licenseLimit['total_limit'];
         $data['remaining_download'] = $licenseLimit['daily_limit'] - $userDownload->count();
         $data['expiry_date'] =$licenseExpiry ? $licenseExpiry->expiry_date : 'N/A';
+        $data['cookie_count'] =  SiteCookie::where('status','active')->count();
         return view('panel.service')->with(compact('data'));
     }
 }
