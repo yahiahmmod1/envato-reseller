@@ -21,7 +21,7 @@
                         <h4 class="card-title">License List</h4>
                         <h6 class="card-subtitle">All License</h6>
                         <div class="table-responsive m-t-40">
-                            <table id="downloadTable" class="table table-bordered table-striped">
+                            <table id="licenseTable" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th>ID#</th>
@@ -65,8 +65,9 @@
 @push('custom-scripts')
     <script>
         $(document).ready(function() {
-            $('#downloadTable').DataTable();
-            $('#orderTable').DataTable();
+            $('#licenseTable').DataTable( {
+                order: [[ 0, 'desc' ]]
+            } );
         });
     </script>
 @endpush
