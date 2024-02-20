@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::get('/user/panel', [DashboardController::class, 'userDashboard'])->name('user.dashboard');
 Route::get('/admin/dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
 Route::post('/admin/create-license', [AdminController::class, 'createLicense'])->name('admin.createLicense');
+Route::match(['get','post'],'/admin/license-edit/{id}', [AdminController::class, 'licenseEdit'])->name('admin.licenseEdit');
 Route::get('/admin/license-list', [AdminController::class, 'licenseList'])->name('admin.licenseList');
 Route::get('/admin/cookie-setting', [AdminController::class, 'setCookie'])->name('admin.setCookie');
 Route::post('/admin/cookie-set-process', [AdminController::class, 'setCookieProcess'])->name('admin.setCookieProcess');

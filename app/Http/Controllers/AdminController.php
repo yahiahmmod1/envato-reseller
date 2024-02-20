@@ -55,6 +55,18 @@ class AdminController extends Controller
         }
     }
 
+    public function licenseEdit(Request $request, LicenseKey $id){
+        if($request->method()=='POST'){
+            $id->days_limit     = $request->days_limit;
+            $id->total_limit    = $request->total_limit;
+            $id->save();
+            return Redirect::route('admin.licenseList')->with('status', 'License Updated');
+        }else{
+            $data['license_key'] =  $id;
+            return view('admin.editLicense')->with(compact('data'));
+        }
+    }
+
     public function licenseList(){
         $data['license_list'] = LicenseKey::orderByDesc('id')->get();
         return view('admin.licenseList')->with(compact('data'));
@@ -105,7 +117,6 @@ class AdminController extends Controller
             $data['site_cookie'] =  $id;
             return view('admin.editCookie')->with(compact('data'));
         }
-
     }
     public function cookieDelete(Request $request, $id){
             SiteCookie::find($id)->delete();

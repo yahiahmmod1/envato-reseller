@@ -109,6 +109,14 @@ class DownloadController extends Controller
         curl_close($curl);
 
         if( $siteCookie->cookie_source=='d5stock'){
+
+            if(isset($response->error) && $response->error=='nolimit'){
+                app()->make('LogService')->createLog( json_encode($response) ,'Inactive Line : 114','envatoDownload');
+                $siteCookie->status = 'inactive';
+                $siteCookie->save();
+                return 'inactive';
+            }
+
             if(isset($response->success) && $response->success){
                 $result['cookie_id'] = $siteCookie->id ;
                 $result['account_name'] =  $siteCookie->account;
@@ -118,7 +126,7 @@ class DownloadController extends Controller
                 $result['download_success'] = true;
                 return $result;
             }else if($response->message){
-                app()->make('LogService')->createLog( json_encode($response) ,'ianctve Line : 121','process');
+                app()->make('LogService')->createLog( json_encode($response) ,'Inactive Line : 126','process');
                 $siteCookie->status = 'inactive';
                 $siteCookie->save();
                 return 'inactive';

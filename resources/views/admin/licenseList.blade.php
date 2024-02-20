@@ -48,7 +48,9 @@
                                             </p>
                                         </td>
                                         <td>@if($list->status=='new') <span class="label label-success">{{$list->status}}</span> @else <span class="label label-danger">{{$list->status}}</span> @endif</td>
-                                        <td>@if($list->status=='new') <a href="{{route('admin.sellLicense',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-check text-info"></i></a>@endif</td>
+                                        <td>@if($list->status=='new') <a href="{{route('admin.sellLicense',$list->id)}}"  onclick="return confirm('Are you sure you want to delete ?');"><i class="mdi mdi-check text-info"></i></a>@endif
+                                            <a href="{{route('admin.licenseEdit',$list->id)}}"><i class="mdi mdi-pencil-circle text-warning"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -63,9 +65,7 @@
 @push('custom-scripts')
     <script>
         $(document).ready(function() {
-            $('#downloadTable',{
-                order: [[0, 'desc']]
-            }).DataTable();
+            $('#downloadTable').DataTable();
             $('#orderTable').DataTable();
         });
     </script>
