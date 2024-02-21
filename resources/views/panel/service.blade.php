@@ -21,7 +21,7 @@
 
                         <div class="d-flex justify-content-between mb-2">
                             <button class="btn btn-primary"><i class="mdi mdi-check"> </i> Service Status: Running </button>
-                            <a class="btn btn-info text-white" href="https://youtu.be/N3446X-MV3o" target="_blank"><i class="mdi mdi-video"> </i> Watch promo video </a>
+                            <a class="btn btn-info text-white" href="https://youtu.be/1XWKWy21ius" target="_blank"><i class="mdi mdi-video"> </i> Watch promo video </a>
                         </div>
 
                         @if($data['service']!=='envato')

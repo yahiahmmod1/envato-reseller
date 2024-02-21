@@ -8,6 +8,7 @@ use App\Models\CookieLog;
 use App\Models\DownloadList;
 use App\Models\LicenseKey;
 use App\Models\SiteCookie;
+use App\Models\SocialLink;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -196,5 +197,40 @@ class AdminController extends Controller
         ActivityLogs::truncate();
         return Redirect::back()->with('status', 'Log Cleared');
     }
+
+    public function settingSocial(){
+        $data['social_list'] =  SocialLink::get();
+        return view('admin.socialList')->with(compact('data'));
+    }
+
+    public function createSocial(Request $request){
+
+        if ($request->hasFile('file')) {
+
+            $image = $request->file('file');
+
+            $img = $image->getClientOriginalName();
+
+            $request->validate([
+                'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+            ]);
+
+            $image->move(public_path('uploads/social'), $img );
+
+            SocialLink::create([
+                'social_icon'=>$img,
+                'name'=>$request->input('name'),
+                'goto_url'=>$request->input('goto_url'),
+                'button_color'=>$request->input('button_color')
+            ]);
+            return Redirect::back()->with('status', 'Social is Added');
+        }
+    }
+
+    public function deleteSocial($id){
+        SocialLink::find($id)->delete();
+        return Redirect::back()->with('status', 'Social is Deleted');
+    }
+
 
 }

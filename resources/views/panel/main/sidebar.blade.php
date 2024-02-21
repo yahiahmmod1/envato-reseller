@@ -28,12 +28,14 @@
                 <li class="nav-small-cap font-15">ACTIVATION</li>
                 <li><a href="#" data-toggle="modal" data-target="#licenseKeyModal" data-whatever="LiceseKey" class="font-15 font-bold"> <i class="mdi mdi-key-plus"></i> <span class="hide-menu font-15 font-bold px-2"> License Key </span> </a></li>
                 <li class="nav-small-cap font-15 font-bold"> <i class="mdi mdi-phone"></i> SUPPORTS</li>
-                <li class="p-1"> <a class="btn text-white" style="background: #25D366; " href="https://wa.link/pc84sd" target="_blank" aria-expanded="false"><i class="mdi mdi-whatsapp text-white" ></i><span class="hide-menu font-15 font-bold px-2"> WhatsApp </span></a>
+
+                @php  $social =  \App\Models\SocialLink::get();  @endphp
+
+                @foreach($social as $social_list)
+                <li class="p-1"> <a class="btn text-white" style="background: {{$social_list->button_color}}; " href="{{$social_list->goto_url}}" target="_blank" aria-expanded="false"><img src="{{asset('uploads/social/'.$social_list->social_icon)}}" style="width: 30px"><span class="hide-menu font-15 font-bold px-2"> {{$social_list->name}} </span></a>
                 </li>
-                <li class="p-1"> <a class="btn text-white" style="background: #0866FF; " href="https://www.facebook.com/digitaltoolsbd" target="_blank" aria-expanded="false"><i class="mdi mdi-facebook text-white" ></i><span class="hide-menu font-15 font-bold px-2"> Facebook </span></a>
-                </li>
-                <li class="p-1"> <a class="btn text-white" style="background: #01479D; " href="https://digitaltoolsbd.com/" target="_blank" aria-expanded="false"><i class="mdi mdi-web text-white" ></i><span class="hide-menu font-15 font-bold px-2"> Website </span></a>
-                </li>
+                @endforeach
+
             </ul>
         </nav>
     </div>

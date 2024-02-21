@@ -36,7 +36,7 @@
                     </li>
                 <li> <a class=" waves-effect waves-dark" href="{{route('admin.logList')}}" aria-expanded="false"><i class="mdi mdi-file-cloud"></i><span class="hide-menu"> Log List  </span></a>
                 </li>
-                    <li> <a class=" waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-phone"></i><span class="hide-menu"> Support </span></a>
+                    <li> <a class=" waves-effect waves-dark" href="{{route('admin.settingSocial')}}" aria-expanded="false"><i class="mdi mdi-phone"></i><span class="hide-menu"> Support </span></a>
                     </li>
             </ul>
         </nav>

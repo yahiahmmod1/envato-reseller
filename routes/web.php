@@ -38,6 +38,9 @@ Route::get('/admin/activate-license/{id}', [AdminController::class, 'activateLic
 Route::get('/admin/user-list', [AdminController::class, 'userList'])->name('admin.userList');
 Route::get('/admin/user-license/{id}', [AdminController::class, 'userLicense'])->name('admin.userLicense');
 Route::get('/admin/clear-log', [AdminController::class, 'clearLog'])->name('admin.clearLog');
+Route::get('/admin/setting-social', [AdminController::class, 'settingSocial'])->name('admin.settingSocial');
+Route::post('/admin/create-social', [AdminController::class, 'createSocial'])->name('admin.createSocial');
+Route::get('/admin/delete-social/{id}', [AdminController::class, 'deleteSocial'])->name('admin.deleteSocial');
 
 Route::get('/admin/banner-setting', [AdminController::class, 'setBanner'])->name('admin.setBanner');
 Route::post('/admin/create-banner', [AdminController::class, 'createBanner'])->middleware('optimizeImages')->name('admin.createBanner');
