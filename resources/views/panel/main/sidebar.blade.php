@@ -32,7 +32,12 @@
                 @php  $social =  \App\Models\SocialLink::get();  @endphp
 
                 @foreach($social as $social_list)
-                <li class="p-1"> <a class="btn text-white" style="background: {{$social_list->button_color}}; " href="{{$social_list->goto_url}}" target="_blank" aria-expanded="false"><img src="{{asset('uploads/social/'.$social_list->social_icon)}}" style="width: 30px"><span class="hide-menu font-15 font-bold px-2"> {{$social_list->name}} </span></a>
+                <li class="p-1">
+                    <a class="btn text-white" style="background: {{$social_list->button_color}}; text-align: left;" href="{{$social_list->goto_url}}" target="_blank" aria-expanded="false">
+                        <div style="margin-left: 30px">
+                            <img src="{{asset('uploads/social/'.$social_list->social_icon)}}" style="width: 30px"><span class="hide-menu font-15 font-bold px-2"> {{$social_list->name}} </span>
+                        </div>
+                    </a>
                 </li>
                 @endforeach
 

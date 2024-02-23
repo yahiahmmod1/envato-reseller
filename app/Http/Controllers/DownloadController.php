@@ -236,7 +236,9 @@ class DownloadController extends Controller
 
         $cookieSource =   $DownloadList->cookie->cookie_source;
         $cookie =   $DownloadList->cookie->cookie_content;
-        $csrf_token =   $DownloadList->cookie->cookie_content;
+        $csrf_token =   $DownloadList->cookie->csrf_token;
+
+        $download_url = $DownloadList->content_link;
 
         if($cookieSource == 'envato-element'){
             $curl = curl_init();
@@ -275,32 +277,58 @@ class DownloadController extends Controller
 
            return response()->json(["status"=>'success','download_url'=> asset('license_files/'.$fileName), "message"=>"License Download"])->withHeaders([
                'Content-Type' => 'text/plain',
-               'Cache-Control' => 'no-store, no-cache',
-               'Content-Disposition' => 'attachment; filename="logs.txt',
+               'Cache-Control' => 'no-store, no-cache'
            ]);;
 
+        }else if($cookieSource == 'd5stock'){
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://www.d5stock.net/api/licenseCenter",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 3000,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => "type=file&url=$download_url&token_=$csrf_token",
+                CURLOPT_HTTPHEADER => array(
+                    "Accept: */*",
+                    "Accept-Encoding: json",
+                    "Accept-Language: en-US,en;q=0.9",
+                    "Cookie: $cookie",
+                    "Referer: https://www.d5stock.net/api/licenseCenter",
+                    "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "X-Requested-With: XMLHttpRequest",
+                    "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+                    "Origin: https://www.d5stock.net",
+                    "X-Csrf-Token: $csrf_token"
+                ),
+            ));
 
-        }else{
-            $url = $DownloadList->content_link;
-            $account_name = $DownloadList->account_name;
-            if($account_name!=null){
-                $response =   $this->envatoDownload($url, $account_name);
-                if($response['download_success']){
-                    $download_url =    $response['download_url'];
-                    $downloadedUrl =  str_replace('\\', '',$download_url);
-                    $DownloadList->download_url_updated =  $downloadedUrl;
-                    $DownloadList->status =  'success';
-                    $DownloadList->license_cookie_id =  $response['cookie_id'];
-                    $DownloadList->license_download =  'yes';
-                    $DownloadList->save();
-                    $status =    'success';
-                    return response()->json(["status"=>$status,'download_url'=> $downloadedUrl, "message"=>"First Download"]);
-                }else{
-                    return response()->json(["status"=>'failed','download_url'=> '', "message"=>"License failed. Download Again please"]);
-                }
-            }else{
-                return response()->json(["status"=>'failed','download_url'=> '', "message"=>"License not available now. Download Again please"]);
-            }
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            $filePathArray =  explode('-',$DownloadList->content_link);
+
+            $fileName =   end( $filePathArray);
+
+            $file = public_path("license_files/$fileName");
+
+            $response_array = json_decode($response);
+
+           // dd();
+
+            $fileContent = file_get_contents($response_array->url);
+
+            file_put_contents($file , $fileContent);
+
+            return response()->json(["status"=>'success','download_url'=> asset('license_files/'.$fileName), "message"=>"License Download"])->withHeaders([
+                'Content-Type' => 'text/plain',
+                'Cache-Control' => 'no-store, no-cache'
+            ]);;
+
+
         }
     }
 
