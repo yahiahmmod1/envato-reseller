@@ -101,7 +101,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -130,8 +129,9 @@
                                         <td>{{$list->daily_limit}}</td>
                                         <td>{{$list->total_limit}}</td>
                                         <td>{{$list->license_key}}</td>
-                                        <td><span class="label label-success">{{$list->status}}</span></td>
-
+                                        <td>
+                                            <span class="label label-success">{{$list->status}}</span>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

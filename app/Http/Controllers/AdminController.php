@@ -255,5 +255,18 @@ class AdminController extends Controller
         return Redirect::back()->with('status', 'Social is Deleted');
     }
 
+    public function userActivity($id){
+        $data['user_info'] = User::find($id);
+        $data['license_list']= LicenseKey::whereUserId($id)->get();
+        $data['download_list']= DownloadList::whereUserId($id)->get();
+
+        $data['today_download'] = DownloadList::whereUserId($id)->whereDate('created_at', DB::raw('CURDATE()'))->count();
+        $data['total_download'] = DownloadList::whereUserId($id)->count();
+        $data['today_limit']    = LicenseKey::whereUserId($id)->sum('daily_limit');
+        $data['total_limit']    = LicenseKey::whereUserId($id)->sum('total_limit');
+
+        return view('admin.userDetail')->with(compact('data'));
+    }
+
 
 }

@@ -41,6 +41,7 @@ Route::get('/admin/clear-log', [AdminController::class, 'clearLog'])->name('admi
 Route::get('/admin/setting-social', [AdminController::class, 'settingSocial'])->name('admin.settingSocial');
 Route::post('/admin/create-social', [AdminController::class, 'createSocial'])->name('admin.createSocial');
 Route::get('/admin/delete-social/{id}', [AdminController::class, 'deleteSocial'])->name('admin.deleteSocial');
+Route::get('/admin/user-activity/{id}', [AdminController::class, 'userActivity'])->name('admin.userActivity');
 
 Route::get('/admin/banner-setting', [AdminController::class, 'setBanner'])->name('admin.setBanner');
 Route::post('/admin/create-banner', [AdminController::class, 'createBanner'])->middleware('optimizeImages')->name('admin.createBanner');
