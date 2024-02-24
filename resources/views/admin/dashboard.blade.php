@@ -14,6 +14,94 @@
 @endsection
 @section('content')
     <div class="container-fluid">
+        <div class="row my-2">
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-info">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white"> {{$data['total_user']}} <i class="ti-angle-down font-14  text-default"></i></h2>
+                                <h6 class="text-white">Total User</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white"> {{ $data['today_user']}} <i class="ti-angle-down font-14  text-default"></i></h2>
+                                <h6 class=" text-white">Today User</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-warning">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white">{{$data['total_active_user'] }} <i class="ti-angle-down font-14  text-default"></i></h2>
+                                <h6 class=" text-white">Total Active User</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-danger">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white">{{  $data['total_envato_downlaod'] }}<i class="ti-angle-up font-14  text-default"></i></h2>
+                                <h6 class=" text-white">Total Envato Download</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row my-2">
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-info">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white"> {{$data['today_envato_downlaod'] }} <i class="ti-angle-down font-14  text-default"></i></h2>
+                                <h6 class="text-white">Today Envato Download</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white"> {{   $data['total_freepik_downlaod'] }} <i class="ti-angle-down font-14  text-default"></i></h2>
+                                <h6 class=" text-white">Total Freepik Download</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-warning">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white">{{ $data['today_freepik_downlaod'] }} <i class="ti-angle-down font-14  text-default"></i></h2>
+                                <h6 class=" text-white">Today Freepik Download</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card card-danger">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12"><h2 class=" text-white">{{   $data['today_limit']  }} / {{$data['total_limit'] }}<i class="ti-angle-up font-14  text-default"></i></h2>
+                                <h6 class=" text-white">Today/Total Limit</h6></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">

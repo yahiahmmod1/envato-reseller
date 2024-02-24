@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="col-4">
-                                    <a class="btn   pull-right btn-danger" href="https://digitaltoolsbd.com/"><i class="mdi mdi-check"> </i> Buy Now </a>
+                                    <a class="btn   pull-right btn-danger" href="https://digitaltoolsbd.com/"  target="_blank"><i class="mdi mdi-check"> </i> Buy Now </a>
                                 </div>
                             </div>
                         @else
@@ -52,7 +52,7 @@
                                 <div class="card card-info">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white"> {{ $data['remaining_download'] }} <i class="ti-angle-down font-14  text-default""></i></h2>
+                                            <div class="col-12"><h2 class=" text-white"> {{ $data['remaining_download'] }} <i class="ti-angle-down font-14  text-default"></i></h2>
                                                 <h6 class="text-white">Remaining Daily Download</h6>
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@
                                 <div class="card card-primary">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white"> {{$data['expiry_date']}} <i class="ti-angle-down font-14  text-default""></i></h2>
+                                            <div class="col-12"><h2 class=" text-white"> {{$data['expiry_date']}} <i class="ti-angle-down font-14  text-default"></i></h2>
                                                 <h6 class=" text-white">Service End Date</h6></div>
                                         </div>
                                     </div>
@@ -73,7 +73,7 @@
                                 <div class="card card-warning">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download_limit']  }} ({{$data['total_download_limit'] - $data['total_download']}}) <i class="ti-angle-down font-14  text-default""></i></h2>
+                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download_limit']  }} ({{$data['total_download_limit'] - $data['total_download']}}) <i class="ti-angle-down font-14  text-default"></i></h2>
                                                 <h6 class=" text-white">Total download limit</h6></div>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                 <div class="card card-danger">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download']}} <i class="ti-angle-up font-14  text-default""></i></h2>
+                                            <div class="col-12"><h2 class=" text-white">{{ $data['total_download']}} <i class="ti-angle-up font-14  text-default"></i></h2>
                                                 <h6 class=" text-white">Total downloads file</h6></div>
                                         </div>
                                     </div>

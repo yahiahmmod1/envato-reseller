@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -30,6 +31,23 @@ class AdminController extends Controller
         $this->middleware('auth');
     }
     public function adminDashboard(){
+
+        $data['total_user'] = User::count();
+        $data['today_user'] = User::whereDate('created_at', DB::raw('CURDATE()'))->count();
+
+        $today =  date('Y-m-d');
+
+        $active_license = LicenseKey::where('expiry_date', '>' , $today )->pluck('id');
+
+        $data['total_active_user'] = User::whereIn('id',$active_license)->count();
+        $data['total_envato_downlaod'] = DownloadList::whereSiteId(1)->count();
+        $data['today_envato_downlaod'] = DownloadList::whereSiteId(1)->whereDate('created_at',DB::raw('CURDATE()'))->count();
+        $data['total_freepik_downlaod'] =DownloadList::whereSiteId(2)->count();
+        $data['today_freepik_downlaod'] = DownloadList::whereSiteId(2)->whereDate('created_at',DB::raw('CURDATE()'))->count();
+
+        $data['today_limit'] =  LicenseKey::where('expiry_date', '>' , $today )->sum('daily_limit');
+        $data['total_limit'] =  LicenseKey::where('expiry_date', '>' , $today )->sum('total_limit');
+
         $data['license_list'] = LicenseKey::where('status','sold')->where('status','used')->where('status','sold')->get();
         return view('admin.dashboard')->with(compact('data'));;
     }
