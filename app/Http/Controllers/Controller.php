@@ -54,6 +54,16 @@ class Controller extends BaseController
        }
     }
 
+    protected function licenseCheck($user_id, $site_id){
+        $today =  date('Y-m-d');
+        $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->where('expiry_date', '>' , $today )->get();
+        if($licenseKey){
+            return $licenseKey;
+        }else{
+            return  false;
+        }
+    }
+
 
 
 }

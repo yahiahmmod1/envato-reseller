@@ -33,7 +33,7 @@
                                 </div>
                             </div>
 
-                        @elseif(strtotime($data['expiry_date']) == null || strtotime(date('Y-m-d')) < strtotime($data['expiry_date'] || $data['remaining_download'] <= 0) )
+                        @elseif( count($data['license_check'])===0 || strtotime($data['expiry_date']) == null || strtotime(date('Y-m-d')) < strtotime($data['expiry_date'] || $data['remaining_download'] <= 0) )
 
                             <div class="row mx-1 my-4 p-2" style="border: 1px solid red">
                                 <div class="col-8 align-content-center">
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="col-4">
-                                    <button class="btn   pull-right btn-danger" ><i class="mdi mdi-check"> </i> Buy Now </button>
+                                    <a class="btn   pull-right btn-danger" href="https://digitaltoolsbd.com/"><i class="mdi mdi-check"> </i> Buy Now </a>
                                 </div>
                             </div>
                         @else

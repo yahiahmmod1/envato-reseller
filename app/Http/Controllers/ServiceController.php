@@ -39,6 +39,8 @@ class ServiceController extends Controller
         $data['remaining_download'] = $licenseLimit['daily_limit'] - $userDownload->count();
         $data['expiry_date'] =$licenseExpiry ? $licenseExpiry->expiry_date : 'N/A';
         $data['cookie_count'] =  SiteCookie::where('status','active')->count();
+
+       $data['license_check'] =   $this->licenseCheck($user_id, 1);
         return view('panel.service')->with(compact('data'));
     }
 }
