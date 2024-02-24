@@ -29,7 +29,9 @@
                 <li><a href="#" data-toggle="modal" data-target="#licenseKeyModal" data-whatever="LiceseKey" class="font-15 font-bold"> <i class="mdi mdi-key-plus"></i> <span class="hide-menu font-15 font-bold px-2"> License Key </span> </a></li>
                 <li class="nav-small-cap font-15 font-bold"> <i class="mdi mdi-phone"></i> SUPPORTS</li>
 
-                @php  $social =  \App\Models\SocialLink::get();  @endphp
+                @php
+                    $social =  \App\Models\SocialLink::get();
+                @endphp
 
                 @foreach($social as $social_list)
                 <li class="p-1">

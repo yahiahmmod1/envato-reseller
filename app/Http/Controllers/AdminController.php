@@ -59,7 +59,12 @@ class AdminController extends Controller
     public function licenseEdit(Request $request, LicenseKey $id){
         if($request->method()=='POST'){
             $id->days_limit     = $request->days_limit;
+            $id->daily_limit   = $request->daily_limit;
             $id->total_limit    = $request->total_limit;
+
+            $expiryDate = date('Y-m-d', strtotime( "+$request->days_limit day"));
+            $id->expiry_date = $expiryDate;
+
             $id->save();
             return Redirect::route('admin.licenseList')->with('status', 'License Updated');
         }else{

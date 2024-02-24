@@ -46,7 +46,7 @@ class Controller extends BaseController
     }
 
     protected function licenseExpiry($user_id, $site_id){
-      $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->latest()->first();;
+      $licenseKey = LicenseKey::where('user_id',$user_id)->where('site_id',$site_id)->latest()->first(); // this is a bug and need to check with date before
        if($licenseKey){
            return $licenseKey;
        }else{
