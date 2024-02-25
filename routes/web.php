@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TemploginController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
@@ -62,5 +63,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/envato-test',[EnvatoController::class,'envatoTest'])->name('envatotest');
 Route::get('/envato-test2',[EnvatoController::class,'envatoTest2'])->name('envatotest2');
 Route::get('/envato-test3',[EnvatoController::class,'envatoTest3'])->name('envatotest3');
+
+Route::get('/user/templogin',[TemploginController::class,'tempLogin'])->name('tempLogin');
+Route::post('/temp/authenticate',[TemploginController::class,'authenticate'])->name('tempAuthenticate');
+Route::post('/admin/generate-temppass',[AdminController::class,'generateTempPass'])->name('generateTempPass');
 
 Route::get('/test',[DownloadController::class,'testService']);

@@ -20,6 +20,7 @@
                     <div class="card-body">
                         <h4 class="card-title">User List</h4>
                         <h6 class="card-subtitle">All User</h6>
+                        <p>Temporary Login Link: https://digitaltoolsbdstock.com/user/templogin </p>
                         <div class="table-responsive m-t-40">
                             <table id="downloadTable" class="table table-bordered table-striped">
                                 <thead>
@@ -48,7 +49,12 @@
                                                 <span class="label label-danger">{{$list->status}}</span>
                                             @endif
                                         </td>
-                                        <td>-</td>
+                                        <td>
+                                            <div id="temp_pass_{{$list->id}}">
+                                                <button type="submit" class="btn btn-xs btn-info" onclick="generateTempPass({{$list->id}})">Generate</button>
+                                            </div>
+
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -66,5 +72,19 @@
             $('#downloadTable').DataTable();
             $('#orderTable').DataTable();
         });
+
+
+        async function generateTempPass(user_id){
+            let {data} = await axios.post('{{route('generateTempPass')}}', {"action":"generate-temp-pass", "user_id": user_id }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $("#temp_pass_"+user_id).html(data.password);
+
+            console.log(data);
+        }
     </script>
 @endpush

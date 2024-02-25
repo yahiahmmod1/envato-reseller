@@ -9,6 +9,7 @@ use App\Models\DownloadList;
 use App\Models\LicenseKey;
 use App\Models\SiteCookie;
 use App\Models\SocialLink;
+use App\Models\TempPass;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -266,6 +267,20 @@ class AdminController extends Controller
         $data['total_limit']    = LicenseKey::whereUserId($id)->sum('total_limit');
 
         return view('admin.userDetail')->with(compact('data'));
+    }
+
+    public function generateTempPass(Request $request){
+
+        $expiryDate = date('Y-m-d', strtotime( "+1 day"));
+        $randomString = Str::random(8);
+
+        TempPass::create([
+            'user_id'=>$request->user_id,
+            'expiry'=>$expiryDate,
+            'password'=> $randomString
+        ]);
+
+        return response()->json(["status"=>'success', "message"=>"Temp Pass Created","password"=>$randomString]);
     }
 
 
