@@ -28,6 +28,7 @@
                                     <th>ID#</th>
                                     <th> Name</th>
                                     <th>Email</th>
+                                    <th>Whatsapp</th>
                                     <th>Joining</th>
                                     <th>Licenses</th>
                                     <th>Status</th>
@@ -40,6 +41,7 @@
                                         <td>{{$list->id}}</td>
                                         <td>{{$list->name}}</td>
                                         <td>{{$list->email}}</td>
+                                        <td>{{$list->whatsapp}}</td>
                                         <td>{{$list->created_at}}</td>
                                         <td> <a href="{{route('admin.userLicense',$list->id)}}">{{count($list->license)}} </a></td>
                                         <td>
