@@ -6,6 +6,7 @@ use App\Models\DownloadList;
 use App\Models\Banner;
 use App\Models\LicenseKey;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +23,23 @@ class DashboardController extends Controller
         $data['banner_left'] = Banner::where('position','left')->limit(1)->orderBy('id', 'desc')->get();
         $data['banner_right'] = Banner::where('position','right')->limit(1)->orderBy('id', 'desc')->get();
         $data['banner'] = Banner::limit(2)->orderBy('id', 'desc')->get();
-        $data['nearest_license_expired'] = LicenseKey::where('user_id',$user_id)->where('expiry_date','<',Carbon::now()->addDays(3))->orderByDesc('id')->take(1)->count();
+
+        $date2Day = new DateTime('+2 day');
+        $extDate2 = $date2Day->format('Y-m-d');
+
+        $date1Day = new DateTime('+1 day');
+        $extDate1 = $date1Day->format('Y-m-d');
+
+        $data['nearest_license_expired'] = LicenseKey::where('user_id',$user_id)
+            ->where('expiry_date','=',$extDate2)
+            ->orderByDesc('id')->take(1)->count();
+
+        if($data['nearest_license_expired']==0){
+            $data['nearest_license_expired'] = LicenseKey::where('user_id',$user_id)
+                ->where('expiry_date','=',$extDate1)
+                ->orderByDesc('id')->take(1)->count();
+        }
+
         return view('panel.dashboard')->with(compact('data'));
     }
 
