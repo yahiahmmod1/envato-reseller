@@ -63,6 +63,8 @@
                                                 @if(@$list->user->id)
                                                 <a href="{{route('admin.userActivity',$list->user->id)}}"><i class="mdi mdi-view-list text-success"></i></a>
                                                 @endif
+
+                                                <i class="mdi mdi-content-copy" onclick="myFunction('{{$list->license_key}}')"></i>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -82,5 +84,16 @@
                 order: [[ 0, 'desc' ]]
             } );
         });
+
+
+        function myFunction(licenseKey) {
+            const copyText = `💎 আপনার Envato Elements এক্টিভেশন:
+❇️ Envato Login Url: https://digitaltoolsbdstock.com/
+🔐 Licence Key: ${licenseKey}
+                                ━━━━  ✧  ━━━━
+👉 লাইসেন্স একটিভ এবং ডাউনলোড প্রসেস জানতে ভিডিওটি দেখুন: https://youtu.be/1XWKWy21ius`;
+            navigator.clipboard.writeText(copyText);
+            alert("License Copied");
+        }
     </script>
 @endpush

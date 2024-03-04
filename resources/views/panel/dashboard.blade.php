@@ -120,6 +120,27 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModal">
+        <div class="modal-dialog" role="notification">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLabel1">Notification! </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    ⚠ প্রিয় গ্রাহক,
+                    খুব শিগ্রই আপনার প্রিমিয়াম সাবস্ক্রিপশনের মেয়াদ পূর্ণ হতে চলছে। পরবর্তী মাসের সাবস্ক্রিপশন রিনিউ করতে আগ্রহী হলে পেমেন্ট করার জন্য অনুরোধ রইল।
+
+                    আপনার কোনো প্রশ্ন থাকলে মেসেজ করুন নিচের দেয়া হোয়াটসঅ্যাপ নাম্বারে:
+                    📞 01882-658934
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('custom-scripts')
     <script>
@@ -158,8 +179,15 @@
             });
         }
 
-
-
         </script>
+
+    @if($data['nearest_license_expired'] >= 1)
+        <script>
+            var myModal = new bootstrap.Modal(document.getElementById('notificationModal'), {
+                keyboard: false
+            });
+            myModal.show();
+        </script>
+    @endif
 
 @endpush
