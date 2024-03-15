@@ -171,7 +171,20 @@
             const responseData = await processDownload(content_url);
 
             $("#loader").hide();
-            $("#download_button").removeAttr('disabled')
+            $("#download_button").removeAttr('disabled');
+            $("#content_url").val('');
+
+            if(responseData.status=='failed'){
+                $("#warning-message").html('<div class="alert alert-danger"> Download Failed <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Download  Failed!",
+                    confirmButtonColor: "#F27474",
+                    footer: '<a href="#">Download failed</a>'
+                });
+                return;
+            }
 
             if(responseData.status=='daily-limit-crossed'){
                 $("#warning-message").html('<div class="alert alert-danger"> Your Daily Limit is Crossed  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div>');
@@ -204,6 +217,7 @@
         setTimeout(()=>{
             $("#warning-message").html('');
             $("#download-url").html('');
+
         },10000);
 
     </script>

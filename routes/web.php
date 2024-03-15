@@ -69,3 +69,4 @@ Route::post('/temp/authenticate',[TemploginController::class,'authenticate'])->n
 Route::post('/admin/generate-temppass',[AdminController::class,'generateTempPass'])->name('generateTempPass');
 
 Route::get('/test',[DownloadController::class,'testService']);
+Route::get('/envatotest',[DownloadController::class,'envatoTest']);
