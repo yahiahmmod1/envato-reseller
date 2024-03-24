@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\DownloadList;
 use App\Models\Banner;
 use App\Models\LicenseKey;
+use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class DashboardController extends Controller
 {
@@ -45,5 +48,29 @@ class DashboardController extends Controller
 
     public function downloadHistory(){
         return view('panel.dashboard');
+    }
+
+    public function myProfile(){
+        $user_id=  Auth::user()->id;
+        $data['myprofile'] = User::find($user_id);
+        return view('panel.myprofile')->with(compact('data'));
+    }
+
+    public function updateMyProfile(Request $request){
+        $id   = $request->id;
+        $name   = $request->name;
+        $email   = $request->email;
+        $whatsapp   = $request->whatsapp;
+        $User =  User::find($id);
+        $User->name =  $name ;
+        $User->email =  $email ;
+        $User->whatsapp =  $whatsapp ;
+        if(isset($request->password)){
+            $User->password =  Hash::make($request->password);
+        }
+        $User->save();
+
+        return Redirect::back()->with('status', 'Profile Udpated');
+
     }
 }

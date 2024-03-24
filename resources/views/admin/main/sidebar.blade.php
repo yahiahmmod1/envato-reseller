@@ -32,7 +32,7 @@
                 <li class="nav-small-cap">SETTINGS</li>
                     <li> <a class=" waves-effect waves-dark" href="{{route('admin.setCookie')}}" aria-expanded="false"><i class="mdi mdi-codepen"></i><span class="hide-menu"> Cookie  </span></a>
                     </li>
-                <li> <a class=" waves-effect waves-dark" href="{{route('admin.setCookie')}}" aria-expanded="false"><i class="mdi mdi-wrench"></i><span class="hide-menu"> Cookie  Check </span></a>
+                <li> <a class=" waves-effect waves-dark" href="{{route('admin.testCookie')}}" aria-expanded="false"><i class="mdi mdi-wrench"></i><span class="hide-menu"> Cookie  Check </span></a>
                 </li>
                     <li> <a class=" waves-effect waves-dark" href="{{route('admin.setBanner')}}" aria-expanded="false"><i class="mdi mdi-image"></i><span class="hide-menu"> Banner  </span></a>
                     </li>

@@ -283,5 +283,52 @@ class AdminController extends Controller
         return response()->json(["status"=>'success', "message"=>"Temp Pass Created","password"=>$randomString]);
     }
 
+    public function testCookie(){
+        $data['cookie_list'] = SiteCookie::where('cookie_source','envato-element')->get();
+        return view('admin.testCookie')->with(compact('data'));
+    }
+
+    public function testCookieProcess(Request $request){
+        $cookie_id = $request->cookie_id;
+        $url = $request->download_url;
+
+        $siteCookie =  SiteCookie::find($cookie_id);
+
+        $cookie = $siteCookie->cookie_content;
+        $csrf_token = $siteCookie->csrf_token;
+
+        $project = $siteCookie->account;
+        $product_array = explode('-',$url);
+        $product_id = end($product_array);
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://elements.envato.com/elements-api/items/$product_id/download_and_license.json",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 10000,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "licenseType=project&projectName=$project",
+            CURLOPT_HTTPHEADER => array(
+                "Accept: application/json",
+                "Accept-Encoding: json",
+                "Accept-Language: en-US,en;q=0.9",
+                "Cookie: $cookie",
+                "Origin: https://elements.envato.com",
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                "X-Requested-With: XMLHttpRequest",
+                "Content-Type: application/x-www-form-urlencoded; charset=UTF-8",
+                "X-Csrf-Token: $csrf_token"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $data['cookie_response'] = $response ;
+        return view('admin.testCookieProcess')->with(compact('data'));
+    }
+
 
 }

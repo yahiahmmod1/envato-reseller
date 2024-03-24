@@ -30,6 +30,10 @@ Route::post('/admin/create-license', [AdminController::class, 'createLicense'])-
 Route::match(['get','post'],'/admin/license-edit/{id}', [AdminController::class, 'licenseEdit'])->name('admin.licenseEdit');
 Route::get('/admin/license-list', [AdminController::class, 'licenseList'])->name('admin.licenseList');
 Route::get('/admin/cookie-setting', [AdminController::class, 'setCookie'])->name('admin.setCookie');
+
+Route::get('/admin/cookie-test', [AdminController::class, 'testCookie'])->name('admin.testCookie');
+Route::post('/admin/cookie-test-process', [AdminController::class, 'testCookieProcess'])->name('admin.testCookieProcess');
+
 Route::post('/admin/cookie-set-process', [AdminController::class, 'setCookieProcess'])->name('admin.setCookieProcess');
 Route::get('/admin/cookie-delete/{id}', [AdminController::class, 'cookieDelete'])->name('admin.cookieDelete');
 Route::match(['get','post'],'/admin/cookie-edit/{id}', [AdminController::class, 'cookieEdit'])->name('admin.cookieEdit');
@@ -54,19 +58,21 @@ Route::post('/keyactivation',[LicenseController::class,'activateProcess'])->name
 Route::get('/user/service/{service}',[ServiceController::class,'userService'])->name('service');
 Route::post('/user/download/process',[DownloadController::class,'downloadProcess'])->name('download.process');
 Route::get('/user/license-download/{id}', [DownloadController::class, 'licenseDownload'])->name('user.licenseDownload');
+Route::get('/user/my-profile', [DashboardController::class, 'myProfile'])->name('user.myProfile');
+Route::post('/user/update-profile', [DashboardController::class, 'updateMyProfile'])->name('user.updateMyProfile');
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/envato-test',[EnvatoController::class,'envatoTest'])->name('envatotest');
-Route::get('/envato-test2',[EnvatoController::class,'envatoTest2'])->name('envatotest2');
-Route::get('/envato-test3',[EnvatoController::class,'envatoTest3'])->name('envatotest3');
+//Route::get('/envato-test',[EnvatoController::class,'envatoTest'])->name('envatotest');
+//Route::get('/envato-test2',[EnvatoController::class,'envatoTest2'])->name('envatotest2');
+//Route::get('/envato-test3',[EnvatoController::class,'envatoTest3'])->name('envatotest3');
 
 Route::get('/user/templogin',[TemploginController::class,'tempLogin'])->name('tempLogin');
 Route::post('/temp/authenticate',[TemploginController::class,'authenticate'])->name('tempAuthenticate');
 Route::post('/admin/generate-temppass',[AdminController::class,'generateTempPass'])->name('generateTempPass');
 
-Route::get('/test',[DownloadController::class,'testService']);
-Route::get('/envatotest',[DownloadController::class,'envatoTest']);
+//Route::get('/test',[DownloadController::class,'testService']);
+//Route::get('/envatotest',[DownloadController::class,'envatoTest']);

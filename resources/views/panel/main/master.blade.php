@@ -98,11 +98,11 @@
                                         <div class="u-img"><img src="{{asset('template/admin_template/assets/images/users/1.jpg')}}" alt="user"></div>
                                         <div class="u-text">
                                             <h4>{{ Auth::user()->name }}</h4>
-                                            <p class="text-muted">{{ Auth::user()->email }}</p><a href="/" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                            <p class="text-muted">{{ Auth::user()->email }}</p><a href="{{route('user.myProfile')}}" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                     </div>
                                 </li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                                <li><a href="{{route('user.myProfile')}}"><i class="ti-user"></i> My Profile</a></li>
                                 <li>
                                     <a href="{{ route('logout') }}"
                                           onclick="event.preventDefault();

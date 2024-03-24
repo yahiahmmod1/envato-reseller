@@ -18,7 +18,6 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        @php// dd($data['site_cookie']['id']); @endphp
                         <h4 class="card-title">Cookie Edit</h4>
                         <form id="cookie-form" action="{{route('admin.cookieEdit',$data['site_cookie']['id'])}}" method="POST" accept-charset="UTF-8">
                             @csrf
